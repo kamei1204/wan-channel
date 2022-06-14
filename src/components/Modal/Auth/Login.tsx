@@ -64,7 +64,7 @@ const Login: React.FC<LoginProps> = () => {
                 bg="gray.50"
             />
             <Text align="center" color="red" fontSize="8pt">{FIREBASE_ERRORS[error?.message as keyof typeof FIREBASE_ERRORS ]}</Text>
-            <Button width="100%" height="36px" mt={2} mb={2} type="submit" isLoading={loading} >ログイン</Button>
+            <Button width="100%" height="36px" mt={2} mb={2} type="submit"  >ログイン</Button>
             <Flex fontSize="8pt" justify="center">
                 <Text mr={2}>パスワードをお忘れですか？</Text>
                 <Text 
