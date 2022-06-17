@@ -1,5 +1,5 @@
 import { ChevronDownIcon } from '@chakra-ui/icons'
-import { Flex, Icon, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Text } from '@chakra-ui/react'
+import { Box, Flex, Icon, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Text } from '@chakra-ui/react'
 import { signOut, User } from 'firebase/auth'
 import React from 'react'
 import { BsMenuDown } from 'react-icons/bs'
@@ -28,7 +28,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
                         {user? (
                             <>
                             <Icon as={BsMenuDown} mr={2} fontSize={24} color="gray.700" display={{ base: "none", md: "flex" }}/>
-                            <Flex flexDirection="column" align="flex-start" fontSize="8pt" display={{ base: "none", lg: "flex" }} mr={2}>
+                            <Box flexDirection="column" alignItems="flex-start" fontSize="8pt" display={{ base: "none", lg: "flex" }} mr={2}>
                                 <Text fontWeight={700}>
                                     {user?.displayName || user?.email?.split("@")[0]}
                                 </Text>
@@ -36,9 +36,9 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
                                     <Icon as={SiDatadog}  color="orange.400" fontSize={15}/>
                                     <Text color="gray.400">1 dog</Text>
                                 </Flex>
-                            </Flex>
+                            </Box>
                             </>
-                        ) : (<Icon as={VscAccount} fontSize={20}/>)}
+                        ) : (<Icon as={VscAccount} fontSize={2}/>)}
                         {/* 下矢印ダウンアイコン */}
                         <ChevronDownIcon />
                     </Flex>
