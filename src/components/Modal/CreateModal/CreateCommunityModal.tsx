@@ -2,7 +2,7 @@ import { Box, Button, Checkbox, Divider, Flex, Icon, Input, Modal, ModalBody, Mo
 import React, { useState } from 'react'
 import { HiUser, HiEye } from "react-icons/hi"
 import { BsFillLockFill } from "react-icons/bs"
-import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { doc, runTransaction, serverTimestamp, setDoc, Transaction } from 'firebase/firestore';
 import { auth, firestore } from '../../../FireBase/ClientApp';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
@@ -49,23 +49,35 @@ const CreateCommunityModal:React.FC<CreateCommunityModalProps> = ({ open, handle
                     // コミュニティーで有効な名前の場合
 
                     const communityDocRef = doc(firestore, "communities", communityName );
-                    const communityDoc = await getDoc(communityDocRef);
 
-                    // exists(存在しているか？)
-                    if (communityDoc.exists()) {
-                        throw new Error(`ごめんなさい、r/${communityName}はすでに使われておりまする。。。他の名をお願いします`);
-                    }
+                    
+                    await runTransaction(firestore, async (transaction) => {
+                        //communityDocRef = doc(firestore, "communities", communityName)に存在している情報を読み込む
+                            const communityDoc = await transaction.get(communityDocRef);
+                            // もし存在しない場合 exists(存在しているか？) 
+                            if (communityDoc.exists()) {
+                            throw new Error(`ごめんなさい、r/${communityName}はすでに使われておりまする。。。他の名をお願いします`);
+                        }
+                        // コミュニティーを作成する
+                        transaction.set(communityDocRef, {
+                            // 作成者Id
+                            creatorId: user?.uid,
+                            // 作成日
+                            createdAt: serverTimestamp(),
+                            // 会員番号
+                            numberOfMembers: 1,
+                            // 公開方法
+                            privacyType: communityType,
+                        });
 
-                    await setDoc(communityDocRef, {
-                        // 作成者Id
-                        creatorId: user?.uid,
-                        // 作成日
-                        createdAt: serverTimestamp(),
-                        // 会員番号
-                        numberOfMembers: 1,
-                        // 公開方法
-                        privacyType: communityType,
+                        // 作成したコミュニティーをfirebaseのユーザーコミュニティースニペットの保存する
+                        transaction.set(doc(firestore, `users/${user?.uid}/communitySnipetts`, communityName), {
+                            communityId: communityName,
+                            isModerator: true,
+                        }
+                        );
                     });
+
                 } catch (error: any) {
                     console.log("handleCreateCommunity error", error)
                     setError(error.message);
