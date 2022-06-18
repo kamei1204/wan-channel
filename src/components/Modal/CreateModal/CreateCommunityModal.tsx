@@ -70,7 +70,7 @@ const CreateCommunityModal:React.FC<CreateCommunityModalProps> = ({ open, handle
                             privacyType: communityType,
                         });
 
-                        // 作成したコミュニティーをfirebaseのユーザーコミュニティースニペットの保存する
+                        // 作成したコミュニティーをfirebaseのユーザーコミュニティースニペットの保存する === communityAtom.tsのmy Snipetts
                         transaction.set(doc(firestore, `users/${user?.uid}/communitySnipetts`, communityName), {
                             communityId: communityName,
                             isModerator: true,
