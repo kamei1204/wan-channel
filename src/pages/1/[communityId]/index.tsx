@@ -51,15 +51,15 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
     try {                                  //URLのクエリ文字列(クエリパラメータ)は常に文字列なので、これを文字列型にする事で、コンパイルエラーを防ぐ
         const communityDocRef = doc(firestore, "communities", context.query.communityId as string);
-        const communityDoc = await getDoc(communityDocRef)
+        const communityDoc = await getDoc(communityDocRef);
 
         return {
             props: {
                 // 実際のデータをcommunityDataに抽出する
                 // 文字列化されたデータを解析する                  //safeJsonStringifyオブジェクト参照時,オブジェクトのIDが必要
-                communityData: communityDoc.exists() ? JSON.parse(safeJsonStringify({ id: communityDoc.id, ...communityDoc.data }))
+                communityData: communityDoc.exists() ? JSON.parse(safeJsonStringify({ id: communityDoc.id, ...communityDoc.data() }))
                 : "",
-            } 
+            },
         };
     } catch (error) {
         console.log("getServerSidePropsError", error)

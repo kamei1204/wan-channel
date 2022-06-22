@@ -13,7 +13,7 @@ export interface community {
     imageUrl ?      : string;
 }
 
-interface CommunitySnippet {
+export interface CommunitySnippet {
     communityId: string;
     // Moderator(モデレーター)Web上の掲示板やコミュニティサイト、Webサイト内で意見を交換し合う際に、仲介者となってことを取りまとめる立ち位置の人をモデレータと言い、常に中立な立場が求められます。
     isModerator?: boolean;
@@ -25,7 +25,7 @@ interface CommunityState {
 }
 
 
-const defaultCommunityState = {
+const defaultCommunityState: CommunityState = {
     mySnippets: [],
 }
 
