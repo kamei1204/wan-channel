@@ -8,8 +8,9 @@ import { CgProfile } from 'react-icons/cg'
 import { MdLogout } from 'react-icons/md'
 import { SiDatadog } from 'react-icons/si'
 import { auth } from '../../FireBase/ClientApp'
-import { useSetRecoilState } from 'recoil'
+import { useResetRecoilState, useSetRecoilState } from 'recoil'
 import { authModalState } from '../../Atoms/authModalAtom'
+import { communityState } from '../../Atoms/communityAtoms'
 
 type UserMenuProps = {
     user?: User | null;
@@ -18,6 +19,13 @@ type UserMenuProps = {
 const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
 
     const setModalState = useSetRecoilState(authModalState)
+    const resetCommunityState = useResetRecoilState(communityState)
+
+    const logout = async () => {
+        await signOut(auth);
+        resetCommunityState();
+        
+    }
 
     return (
         /* chakra-ui menu */
@@ -58,7 +66,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
                 {/* 下線 */}
                 <MenuDivider />
 
-                <MenuItem fontSize="10pt" fontWeight={700} _hover={{ bg: "orange.300", color:"white" }} onClick={() => signOut(auth)}>
+                <MenuItem fontSize="10pt" fontWeight={700} _hover={{ bg: "orange.300", color:"white" }} onClick={logout}>
                     <Flex align="center" >
                         <Icon as={MdLogout} fontSize={20} mr={3} />
                         ログアウト

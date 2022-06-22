@@ -56,7 +56,7 @@ const CreateCommunityModal:React.FC<CreateCommunityModalProps> = ({ open, handle
                             const communityDoc = await transaction.get(communityDocRef);
                             // もし存在しない場合 exists(存在しているか？) 
                             if (communityDoc.exists()) {
-                            throw new Error(`ごめんなさい、r/${communityName}はすでに使われておりまする。。。他の名をお願いします`);
+                            throw new Error(`ごめんなさい、1/${communityName}はすでに使われておりまする。。。他の名をお願いします`);
                         }
                         // コミュニティーを作成する
                         transaction.set(communityDocRef, {
@@ -71,7 +71,9 @@ const CreateCommunityModal:React.FC<CreateCommunityModalProps> = ({ open, handle
                         });
 
                         // 作成したコミュニティーをfirebaseのユーザーコミュニティースニペットの保存する === communityAtom.tsのmy Snipetts
-                        transaction.set(doc(firestore, `users/${user?.uid}/communitySnipetts`, communityName), {
+                        transaction.set(
+                            doc(firestore, `users/${user?.uid}/communitySnippets`, communityName), 
+                        {
                             communityId: communityName,
                             isModerator: true,
                         }

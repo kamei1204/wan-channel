@@ -11,7 +11,7 @@ type HeaderProps = {
 
 const Header:React.FC<HeaderProps> = ({ communityData }) => {
 
-    const { communityStateValue, onJoinOrLeaveCommunity } = useCommunityData();
+    const { communityStateValue, onJoinOrLeaveCommunity, loading } = useCommunityData();
                     // !!でboolealizeする
     const isJoined = !!communityStateValue.mySnippets.find((item) => item.communityId === communityData.id) 
 
@@ -30,7 +30,14 @@ const Header:React.FC<HeaderProps> = ({ communityData }) => {
                             <Text fontWeight={700} fontSize="lg">{communityData.id}</Text>
                             <Text fontSize="sm" color="gray.500">1/{communityData.id}</Text>
                         </Flex>
-                        <Button variant={isJoined ? "outline" : "solid"} height="30px" onClick={() => onJoinOrLeaveCommunity(communityData, isJoined)}>{isJoined ? "入る" : "出る"}</Button>
+                        <Button 
+                            variant={isJoined ? "outline" : "solid"} 
+                            height="30px" pl={6} pr={6} 
+                            onClick={() => onJoinOrLeaveCommunity(communityData, isJoined)}
+                            isLoading={loading}
+                        >
+                            {isJoined ? "参加中" : "参加する"}
+                        </Button>
                     </Flex>
                 </Flex>
             </Flex>
