@@ -8,6 +8,7 @@ import  safeJsonStringify  from 'json-stringify-safe'
 import NotFound from '../../../components/community/NotFound'
 import Header from '../../../components/community/Header'
 import PageContent from '../../../components/Layout/PageContent'
+import CreatePostLink from '../../../components/community/CreatePostLink'
 
 type communityPageProps = {
     communityData: community;
@@ -26,11 +27,7 @@ const communityPage:React.FC<communityPageProps> = ({ communityData }) => {
             <PageContent>
                 {/* 子要素1 左 */}
                 <>
-                    <div>左側</div>
-                    <div>左側</div>
-                    <div>左側</div>
-                    <div>左側</div>
-                    <div>左側</div>
+                    <CreatePostLink />
                 </>
                 {/* 子要素2 右 */}
                 <>

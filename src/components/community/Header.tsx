@@ -17,7 +17,7 @@ const Header:React.FC<HeaderProps> = ({ communityData }) => {
 
     return (
         <Flex flexDirection="column" width="100%" height="150px">
-            <Box height="50%" bg="orange.300" />
+            <Box height="50%" bgGradient='linear(to-r, green.200, pink.500)' />
             <Flex bg="white" flexGrow={1} justify="center">
                 <Flex width="100%" maxWidth="1260px" >
                     { communityData.imageUrl ? (
