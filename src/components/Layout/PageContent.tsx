@@ -9,10 +9,10 @@ const PageContent:React.FC<PageContentProps> = ({ children }) => {
     console.log("children HERE", children)
     return (
         <Flex border="1px solid red" justify="center" p={50}>
-            <Flex border="1px solid green" width="95%" justify="center" maxWidth="1240px">
+            <Flex  width="95%" justify="center" maxWidth="1240px">
                 {/* 左側 */}
                 {/* && 両方成立する必要がある */}
-                <Flex border="1px solid blue" flexDirection="column" width={{ base: "100%", md: "60%"}} mr={{ base: "0", md: "6" }}>{children && children[0 as keyof typeof children]}</Flex>
+                <Flex flexDirection="column" width={{ base: "100%", md: "60%"}} mr={{ base: "0", md: "6" }}>{children && children[0 as keyof typeof children]}</Flex>
                 {/* 右側 */}
                 <Flex border="1px solid black" flexDirection="column" display={{ base:"none", md:"flex" }} flexGrow={1}>{children && children[1 as keyof typeof children]}</Flex>
             </Flex>
