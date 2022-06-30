@@ -8,7 +8,7 @@ import  safeJsonStringify  from 'json-stringify-safe'
 import NotFound from '../../../components/community/NotFound'
 import Header from '../../../components/community/Header'
 import PageContent from '../../../components/Layout/PageContent'
-import CreatePostLink from '../../../components/community/CreatePostLink'
+import CreatePostLink from '../../../components/Post/CreatePostLink'
 
 type communityPageProps = {
     communityData: community;
