@@ -1,16 +1,19 @@
-import { Box, Text } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 import React from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
 import PageContent from '../../../components/Layout/PageContent'
 import NewPostLink from '../../../components/Post/NewPostLink'
+import { auth } from '../../../FireBase/ClientApp'
 
 type Props = {}
 
 const submit:React.FC = () => {
+    const [user] = useAuthState(auth) 
     return (
         <PageContent>
             <>
                 <Box padding="14px 0px" borderBottom="1px solid" borderColor="white">
-                    <NewPostLink />
+                    {user && <NewPostLink  user={user}/>}
                 </Box>
             </>
             <></>
