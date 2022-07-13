@@ -37,7 +37,7 @@ const CreateCommunityModal:React.FC<CreateCommunityModalProps> = ({ open, handle
             // 文字列に！@＃$％^＆*。、<> / \'";：？などの特殊文字が含まれているかどうかを確認し、文字列にこれらの文字が少なくとも1つ含まれている場合はtrueを返します。
             const format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
                 if (format.test(communityName) || communityName.length < 3) {
-                    setError("コミュニティー名は3~21字の間で文字、数字、アンダーバーのみを含めることができますのでお願いしますね"
+                    setError("コミュニティー名は3~21字の間で文字、数字、アンダーバーのみを含めることができますのでお願いします"
                     );
                     return;
                 }

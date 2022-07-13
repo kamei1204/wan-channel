@@ -1,4 +1,4 @@
-import { Flex, Icon } from '@chakra-ui/react'
+import { Alert, AlertIcon,  Flex, Icon, Text } from '@chakra-ui/react'
 import { User } from 'firebase/auth';
 import { addDoc, collection, serverTimestamp, Timestamp, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
@@ -13,7 +13,7 @@ import TabItem from './TabItem';
 import TextInput from './TextInput';
 
 type NewPostLinkProps = {
-    user?: User
+    user: User;
 }
 
 const formTabs: TabItem[] = [
@@ -52,8 +52,9 @@ const NewPostLink:React.FC<NewPostLinkProps> = ({ user }) => {
         title: "",
         body: "",
     });
-    const [ imageFile, setImageFile ] = useState<string>("");
+    const [ imageFile, setImageFile ] = useState<string>();
     const [ loading, setLoading ] = useState(false)
+    const [ error, setError ] = useState(false)
 
     const handleCreatePost = async () => {
         const { communityId } = router.query;
@@ -88,6 +89,7 @@ const NewPostLink:React.FC<NewPostLinkProps> = ({ user }) => {
             
         } catch (error:any) {
             console.log("handleCreatePost error", error.message)
+            setError(true)
         }
         setLoading(false)
     };
@@ -143,6 +145,12 @@ const NewPostLink:React.FC<NewPostLinkProps> = ({ user }) => {
                         />
                 )}
             </Flex>
+            {error && (
+                <Alert status='error'>
+                    <AlertIcon />
+                    <Text mr={2}>投稿できませんでした。。。</Text>
+                </Alert>
+            )}
         </Flex>
     )
 }

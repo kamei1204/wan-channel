@@ -13,7 +13,7 @@ const submit:React.FC = () => {
         <PageContent>
             <>
                 <Box padding="14px 0px" borderBottom="1px solid" borderColor="white">
-                    {user && <NewPostLink  user={user}/>}
+                    {user && <NewPostLink user={user}/>}
                 </Box>
             </>
             <></>
