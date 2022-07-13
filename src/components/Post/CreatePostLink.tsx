@@ -23,8 +23,8 @@ const CreatePostLink = () => {
             setAuthModalState({ open: true, view: "ログイン"  })  
             return;    
         }
-        const {community } = router.query;
-        router.push(`/1/${community}/submit`)
+        const { communityId } = router.query;
+        router.push(`/1/${communityId}/submit`)
     }
     return (
         <Flex 

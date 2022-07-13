@@ -9,6 +9,7 @@ import NotFound from '../../../components/community/NotFound'
 import Header from '../../../components/community/Header'
 import PageContent from '../../../components/Layout/PageContent'
 import CreatePostLink from '../../../components/Post/CreatePostLink'
+import Posts from '../../../components/Post/Posts'
 
 type communityPageProps = {
     communityData: community;
@@ -28,6 +29,7 @@ const communityPage:React.FC<communityPageProps> = ({ communityData }) => {
                 {/* 子要素1 左 */}
                 <>
                     <CreatePostLink />
+                    <Posts communityData={communityData}/>
                 </>
                 {/* 子要素2 右 */}
                 <>
