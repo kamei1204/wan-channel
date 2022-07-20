@@ -20,7 +20,7 @@ const Header:React.FC<HeaderProps> = ({ communityData }) => {
             <Box height="50%" bgGradient='linear(to-r, green.200, pink.500)' />
             <Flex bg="white" flexGrow={1} justify="center">
                 <Flex width="100%" maxWidth="1260px" >
-                    { communityData.imageUrl ? (
+                    { communityData.imageURL ? (
                         <Image />
                     ) : (
                         <Icon as={SiDogecoin} position="relative" top={-3} fontSize="60px" color="orange.300" border="2px solid white" borderRadius="50%"/>

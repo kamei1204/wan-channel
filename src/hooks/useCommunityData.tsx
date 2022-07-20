@@ -62,7 +62,7 @@ const useCommunityData = () => {
 
             const newSnippet: CommunitySnippet = {
                 communityId: communityData.id,
-                imageUrl: communityData.imageUrl || ""
+                imageURL: communityData.imageURL || ""
             }
 
             // doc関数の第3の引数に新しく作成されたIDを指定して、newSnippetsが新しくなる

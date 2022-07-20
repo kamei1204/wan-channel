@@ -67,8 +67,8 @@ const NewPostLink:React.FC<NewPostLinkProps> = ({ user }) => {
             body               : textInputs.body,
             numberOfComments   : 0,
             voteStatus         : 0,
-            // imageUrl?          : string
-            // communityImageUrl? : string
+            // imageURL?          : string
+            // communityImageURL? : string
             createdAt          : serverTimestamp() as Timestamp,
         };
 
