@@ -1,7 +1,12 @@
+import { Stack } from '@chakra-ui/react';
 import { collection, getDoc, getDocs, orderBy, query, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { community } from '../../Atoms/communityAtoms'
-import { firestore } from '../../FireBase/ClientApp';
+import { Post } from '../../Atoms/postsAtoms';
+import { auth, firestore } from '../../FireBase/ClientApp';
+import usePosts from '../../hooks/usePosts';
+import PostItem from './postItem';
 
 type PostsProps = {
     communityData: community;
@@ -10,7 +15,9 @@ type PostsProps = {
 
 const Posts:React.FC<PostsProps> = ({ communityData }) => {
 
-    const [ loading, setLoading ] = useState(false)
+    const [user] = useAuthState(auth)
+    const [ loading, setLoading ] = useState(false);
+    const { postStateValue, setPostStateValue, onVote, onSelectPost, onDeletePost } = usePosts();
 
     const getPosts = async () => {
     
@@ -33,6 +40,12 @@ const Posts:React.FC<PostsProps> = ({ communityData }) => {
             const postDocs = await getDocs(postQuery);
 
             const posts = postDocs.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+            // 前の情報をとる
+            // そのオブジェクトの情報を展開して格納
+            setPostStateValue((prev) => ({
+                ...prev,
+                posts: posts as Post[],
+            }))
 
             console.log("posts", posts)
         
@@ -48,7 +61,12 @@ const Posts:React.FC<PostsProps> = ({ communityData }) => {
     
 
     return (
-        <div>Posts</div>
+        <Stack>
+            {postStateValue.posts.map((item) => (
+                <PostItem   post={item} userCreator={user?.uid === item.creatorId} 
+                            onVote={onVote} onDeletePost={onDeletePost} onSelectPost={onSelectPost}/>
+            ))}
+        </Stack>
     )
 }
 
