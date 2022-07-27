@@ -7,6 +7,7 @@ import { Post } from '../../Atoms/postsAtoms';
 import { auth, firestore } from '../../FireBase/ClientApp';
 import usePosts from '../../hooks/usePosts';
 import PostItem from './postItem';
+import PostLoader from './PostLoader';
 
 type PostsProps = {
     communityData: community;
@@ -20,9 +21,9 @@ const Posts:React.FC<PostsProps> = ({ communityData }) => {
     const { postStateValue, setPostStateValue, onVote, onSelectPost, onDeletePost } = usePosts();
 
     const getPosts = async () => {
-    
+        
         try {
-
+            setLoading(true)
             // ドキュメントはコレクションの中にあります。コレクションは単なるドキュメントのコンテナです。
             // たとえば、users コレクションを作成して、さまざまなユーザーを表すドキュメントを格納できます
             // この場合、collectionの中のfirestoreの中の、"posts"がドキュメントにあたる
@@ -52,6 +53,7 @@ const Posts:React.FC<PostsProps> = ({ communityData }) => {
         } catch (error:any) {
             console.log("getPosts error", error.message)
         }
+        setLoading(false)
     
     };
 
@@ -61,13 +63,21 @@ const Posts:React.FC<PostsProps> = ({ communityData }) => {
     
 
     return (
-        <Stack>
+        <>
+        {loading ? (
+            <PostLoader />
+        ) : (
+            <Stack>
             {postStateValue.posts.map((item) => (
-                <PostItem   post={item} userCreator={user?.uid === item.creatorId} 
+                <PostItem key={item.id}   post={item} userCreator={user?.uid === item.creatorId} 
                             onVote={onVote} onDeletePost={onDeletePost} onSelectPost={onSelectPost}/>
             ))}
-        </Stack>
+            </Stack>
+        )}
+        </>
+        
     )
 }
+
 
 export default Posts
