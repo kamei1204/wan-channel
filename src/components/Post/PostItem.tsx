@@ -1,5 +1,5 @@
-import { Flex, Icon, Image, Stack, Text } from '@chakra-ui/react';
-import React from 'react'
+import { Alert, AlertIcon, Flex, Icon, Image, Skeleton, Spinner, Stack, Text } from '@chakra-ui/react';
+import React, { useState } from 'react'
 import { Post } from '../../Atoms/postsAtoms'
 import { CgArrowUpO, CgArrowDownO } from 'react-icons/cg'
 import { BsFillArrowUpCircleFill, BsFillArrowDownCircleFill, BsChat } from 'react-icons/bs'
@@ -17,9 +17,9 @@ type PostItemProps = {
     // 投票した人にアクセスする
     onVote: () => {};
     // 投稿削除
-    onDeletePost: () => {};
+    onDeletePost: (post: Post) => Promise<boolean>
     // 投稿選択
-    onSelectPost: () => {};
+    onSelectPost: () => void;
 
 
 }
@@ -27,28 +27,54 @@ type PostItemProps = {
 const PostItem:React.FC<PostItemProps> = ({
     post, userCreator, userVoteValue, onVote, onDeletePost, onSelectPost
 }) => {
+    const [loadingImage, setLoadingImage] = useState(true);
+    const [error, setError] = useState();
+    const [loadingDelete, setLoadingDelete] = useState(false);
+
+    const handleDelete = async () => {
+        setLoadingDelete(true)
+        try {
+            const success = await onDeletePost(post);
+            
+            if(!success) {
+                throw new Error("投稿を削除できませんでした")
+            }
+            console.log("投稿を削除しました")
+        } catch (error: any) {
+            setError(error.message)
+            
+        }
+        setLoadingDelete(false)
+    }
     return (
         <Flex border="1px solid" bg="white" 
                 borderColor="gray.300" borderRadius={4} 
                 _hover={{ borderColor: "gray.500" }} 
                 cursor="pointer"
                 onClick={onSelectPost}>
-        <Flex flexDirection="column" width="40px" bg="gray.100" borderRadius={4} align="center">
+            <Flex flexDirection="column" width="40px" bg="gray.100" borderRadius={4} align="center">
                 <Icon as={ userVoteValue === 1 ? BsFillArrowUpCircleFill : CgArrowUpO} 
                         color={ userVoteValue === 1 ? "brand.100" : "gray.400" }
                         fontSize={18}
                         cursor="pointer"
                         onClick={onVote}
+                        mt={4}
                 />
-            <Text fontSize={20}>{post.voteStatus}</Text>
-            <Icon as={ userVoteValue === 1 ? BsFillArrowDownCircleFill : CgArrowDownO} 
+                <Text fontSize={20}>{post.voteStatus}</Text>
+                <Icon as={ userVoteValue === 1 ? BsFillArrowDownCircleFill : CgArrowDownO} 
                         color={ userVoteValue === 1 ? "blue.200" : "gray.400" }
                         fontSize={18}
                         cursor="pointer"
                         onClick={onVote}
                 />
-        </Flex>
+            </Flex>
             <Flex flexDirection="column" width="100%" >
+            {error && (
+                <Alert status='error'>
+                    <AlertIcon />
+                    <Text mr={2}>{error}</Text>
+                </Alert>
+            )}
                 <Stack spacing={1} p='10px'>
                     <Stack direction="row" spacing={0.6} fontSize="8pt" align="center">
                         <Text>
@@ -60,7 +86,10 @@ const PostItem:React.FC<PostItemProps> = ({
                     <Text fontSize="10pt">{post.body}</Text>
                     {post.imageURL && (
                         <Flex justify="center" align="center" p={2}>
-                            <Image src={post.imageURL} maxWidth="460px" alt="post image"/>
+                            {loadingImage && (
+                                <Skeleton height="200px" width="100%" borderRadius={4}/>
+                            )}
+                            <Image src={post.imageURL} maxWidth="460px" alt="post image" display={loadingImage ? "none" : "unset"} onLoad={() => setLoadingImage(false)}/>
                         </Flex>
                     )}
                     <Flex ml={1} mb={0.8} fontWeight={600} color="gray.500">
@@ -82,9 +111,15 @@ const PostItem:React.FC<PostItemProps> = ({
                         </Flex>
                         {userCreator && (
                             <Flex ml={1} mb={0.8} fontWeight={600} color="gray.500">
-                            <Flex p="8px 10px" align="center" borderRadius={4} _hover={{ color: "gray.300" }} cursor="pointer">
-                                <Icon as={RiDeleteBin6Line}/>
-                                <Text ml={2} fontSize="9pt">投稿を削除</Text>
+                            <Flex p="8px 10px" align="center" borderRadius={4} _hover={{ color: "gray.300" }} cursor="pointer" onClick={handleDelete}>
+                                {loadingDelete ? (
+                                    <Spinner size="sm" />
+                                ) : (
+                                    <>
+                                        <Icon as={RiDeleteBin6Line}/>
+                                        <Text ml={2} fontSize="9pt">投稿を削除</Text>
+                                    </>
+                                )}
                             </Flex>
                         </Flex>
                         )}
