@@ -7,6 +7,7 @@ import React, { useState } from 'react'
 import { IoDocumentText, IoImageOutline, IoLink, IoMic, IoPeopleOutline } from 'react-icons/io5'
 import { Post } from '../../Atoms/postsAtoms';
 import { firestore, storage } from '../../FireBase/ClientApp';
+import useSelectedFile from '../../hooks/useSelectedFile';
 import ImageInput from './ImageInput';
 
 import TabItem from './TabItem';
@@ -52,7 +53,8 @@ const NewPostLink:React.FC<NewPostLinkProps> = ({ user }) => {
         title: "",
         body: "",
     });
-    const [ imageFile, setImageFile ] = useState<string>();
+    // const [ imageFile, setImageFile ] = useState<string>();
+    const { imageFile, setImageFile, onSelectFile } = useSelectedFile();
     const [ loading, setLoading ] = useState(false)
     const [ error, setError ] = useState(false)
 
@@ -84,9 +86,11 @@ const NewPostLink:React.FC<NewPostLinkProps> = ({ user }) => {
 
                 await updateDoc(postDocRef, {
                     imageURL: downLoadUrl,
-                })
+                });
             }
             
+            router.back();
+
         } catch (error:any) {
             console.log("handleCreatePost error", error.message)
             setError(true)
@@ -94,23 +98,27 @@ const NewPostLink:React.FC<NewPostLinkProps> = ({ user }) => {
         setLoading(false)
     };
 
-    const onSelectImage = (event:React.ChangeEvent<HTMLInputElement>) => {
-        // FileReaderクラスはテキストファイルを読み込むためのAPIで、テキストファイルの内容を元にした処理などを行うために使います。 
-        // FileReaderクラスを使うと、ファイルは文字のストリームで読み込まれます
-        const reader = new FileReader();
+    // useSelectFileにまとめてhooksとして再利用できるようにした
+    // リファクタリング
 
-        if(event.target.files?.[0]) {
-            reader.readAsDataURL(event.target.files?.[0])
-        }
 
-        // FileReader.onload - 読み込みが正常に完了した時に発火するイベント
-        reader.onload = (readerEvent) => {
-                if(readerEvent.target?.result) {
-                    // as = 型アサーション(Type Assertion)とは、その推論された型や、既に型定義済みの変数の型を上書きします。
-                    setImageFile(readerEvent.target.result as string)
-                }
-        }
-    };
+    // const onSelectImage = (event:React.ChangeEvent<HTMLInputElement>) => {
+    //     // FileReaderクラスはテキストファイルを読み込むためのAPIで、テキストファイルの内容を元にした処理などを行うために使います。 
+    //     // FileReaderクラスを使うと、ファイルは文字のストリームで読み込まれます
+    //     const reader = new FileReader();
+
+    //     if(event.target.files?.[0]) {
+    //         reader.readAsDataURL(event.target.files[0])
+    //     }
+
+    //     // FileReader.onload - 読み込みが正常に完了した時に発火するイベント
+    //     reader.onload = (readerEvent) => {
+    //             if(readerEvent.target?.result) {
+    //                 // as = 型アサーション(Type Assertion)とは、その推論された型や、既に型定義済みの変数の型を上書きします。
+    //                 setImageFile(readerEvent.target.result as string)
+    //             }
+    //     }
+    // };
 
     const onChangeText = (event:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
         ) => { const { target: { name, value },
@@ -141,7 +149,7 @@ const NewPostLink:React.FC<NewPostLinkProps> = ({ user }) => {
                         imageFile={imageFile}
                         setImageFile={setImageFile}
                         setSelectedItem={setSelectedItem}
-                        onSelectImage={onSelectImage}
+                        onSelectImage={onSelectFile}
                         />
                 )}
             </Flex>

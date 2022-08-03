@@ -1,6 +1,8 @@
 import { Box } from '@chakra-ui/react'
 import React from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import { useRecoilValue } from 'recoil'
+import { communityState } from '../../../Atoms/communityAtoms'
 import PageContent from '../../../components/Layout/PageContent'
 import NewPostLink from '../../../components/Post/NewPostLink'
 import { auth } from '../../../FireBase/ClientApp'
@@ -8,7 +10,9 @@ import { auth } from '../../../FireBase/ClientApp'
 type Props = {}
 
 const submit:React.FC = () => {
-    const [user] = useAuthState(auth) 
+    const [user] = useAuthState(auth);
+    const communityStateValue = useRecoilValue(communityState)
+    console.log("community", communityStateValue)
     return (
         <PageContent>
             <>

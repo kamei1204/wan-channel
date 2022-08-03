@@ -54,7 +54,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
             </MenuButton>
                 
             <MenuList>
-                {user? 
+            {user? (
                 <>
                         <MenuItem fontSize="10pt" fontWeight={700} _hover={{ bg: "orange.300", color:"white" }}>
                     <Flex align="center" >
@@ -73,7 +73,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
                     </Flex>
                 </MenuItem>
                 </> 
-                : 
+                ) : (
                 <>
                 <MenuItem fontSize="10pt" fontWeight={700} _hover={{ bg: "orange.300", color:"white" }} onClick={() => setModalState({ open: true, view: "ログイン"})}>
                     <Flex align="center" >
@@ -81,7 +81,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
                         ログイン / 会員登録
                     </Flex>
                 </MenuItem>
-                </>}
+                </>)}
                 
             </MenuList>
         </Menu>

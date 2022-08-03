@@ -15,7 +15,7 @@ const RightComponents:React.FC<RightComponentsProps> = ({ user }) => {
         <>
             <Flex justify="center" align="center">
                 <AuthModal />
-                { user ? <Icons/> : <AuthButton />}
+                { user ? (<Icons/>) : (<AuthButton />)}
                 <UserMenu user={user}/>
             </Flex>
         </>

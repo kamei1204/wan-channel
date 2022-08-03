@@ -11,9 +11,9 @@ const SearchInput:React.FC = () => {
         <Flex flexGrow={1} mr={2}  ml={2} align="center">
             <InputGroup>
                 <InputLeftElement
-                pointerEvents='none'
-                // children={<SearchIcon color='gray.300' mb={1}/>}
-                />
+                    pointerEvents='none'
+                    // children={<SearchIcon color='gray.300' mb={1}/>}
+                    />
                 <Input 
                     placeholder='1チャンネル 検索' 
                     fontSize="10pt"
