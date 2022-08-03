@@ -3,8 +3,6 @@ import React, { useState } from 'react'
 import CreateCommunityModal from '../../Modal/CreateModal/CreateCommunityModal'
 import { BsPlus } from 'react-icons/bs'
 
-type Props = {}
-
 const Community = () => {
 
   const [ open, setOpen ] = useState(false)

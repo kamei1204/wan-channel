@@ -4,8 +4,6 @@ import React from 'react'
 import { GoHome } from "react-icons/go"
 import Community from './Community'
 
-type Props = {}
-
 const Direction:React.FC = () => {
     return (
         <Menu>

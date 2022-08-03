@@ -30,25 +30,25 @@ const AuthModal:React.FC<AuthModalProps> = () => {
             <Modal isOpen={modalState.open} onClose={handleClose}>
                 <ModalOverlay />
                 <ModalContent>
-                <ModalHeader display="flex" flexDirection="column" alignItems="center" justifyContent="center">
-                    {modalState.view === "ログイン" && "ログイン"}
-                    {modalState.view === "会員登録" && "会員登録"}
-                    {modalState.view === "パスワードの再設定" && "パスワードの再設定"}
-                </ModalHeader>
-                <ModalCloseButton />
-                <ModalBody display="flex" flexDirection="column" alignItems="center" justifyContent="center">
-                    <Flex direction="column" align="center" justify="center" width="70%">
-                        {modalState.view === "ログイン" || modalState.view === "会員登録" ? (
-                        <>
-                            <AuthButtons />
-                            <Text color="gray.500" fontWeight={500}>OR</Text>
-                            <AuthInput /> 
-                        </>
-                        ) : ( <ResetPassword/>)
-                        }
-                        
-                    </Flex>
-                </ModalBody>
+                    <ModalHeader display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+                        {modalState.view === "ログイン" && "ログイン"}
+                        {modalState.view === "会員登録" && "会員登録"}
+                        {modalState.view === "パスワードの再設定" && "パスワードの再設定"}
+                        </ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+                        <Flex direction="column" align="center" justify="center" width="70%">
+                            {modalState.view === "ログイン" || modalState.view === "会員登録" ? (
+                            <>
+                                <AuthButtons />
+                                <Text color="gray.500" fontWeight={500}>OR</Text>
+                                <AuthInput /> 
+                            </>
+                            ) : ( <ResetPassword/>)
+                            }
+                            
+                        </Flex>
+                    </ModalBody>
                 </ModalContent >
             </Modal>
         </>

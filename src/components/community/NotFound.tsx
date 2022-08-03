@@ -11,7 +11,7 @@ const NotFound:React.FC = () => {
                 <Image src="/Images/wan-cannel.logo.PNG" height="120px" width="120px" layout="intrinsic" />
             </Flex>
             <Link href="/">
-            <Button>ホームに戻る</Button>
+                <Button>ホームに戻る</Button>
             </Link>
         </Flex>
     )

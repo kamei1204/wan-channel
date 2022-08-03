@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { GetServerSidePropsContext } from "next"
 import { firestore } from '../../../FireBase/ClientApp'
 import { doc, getDoc } from 'firebase/firestore'
-import { community } from '../../../Atoms/communityAtoms'
+import { community, communityState } from '../../../Atoms/communityAtoms'
 // safeJsonStringifyを使用する事で、シリアライザーエラーを防ぐ
 import  safeJsonStringify  from 'json-stringify-safe'
 import NotFound from '../../../components/community/NotFound'
@@ -10,17 +10,28 @@ import Header from '../../../components/community/Header'
 import PageContent from '../../../components/Layout/PageContent'
 import CreatePostLink from '../../../components/Post/CreatePostLink'
 import Posts from '../../../components/Post/Posts'
+import { useSetRecoilState } from 'recoil'
+import About from '../../../components/community/about'
 
 type communityPageProps = {
     communityData: community;
 }
 
 const communityPage:React.FC<communityPageProps> = ({ communityData }) => {
+    const setCommunityStateValue = useSetRecoilState(communityState)
     console.log('コミュニティーのデータ', communityData);
 
     if(!communityData) {
         return  <NotFound />
     }
+
+    useEffect(() => {
+        setCommunityStateValue((prev) => ({
+            ...prev,
+            currentCommunity: communityData
+        }))
+    }, [])
+    
 
     return (
         <>
@@ -33,7 +44,7 @@ const communityPage:React.FC<communityPageProps> = ({ communityData }) => {
                 </>
                 {/* 子要素2 右 */}
                 <>
-                    <div>右側</div>
+                    <About communityData={communityData}/>
                 </>
             </PageContent>
         </>
