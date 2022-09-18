@@ -1,7 +1,7 @@
 import { Box, Divider, Flex, Icon, Stack, Text, Button, Image, Spinner } from '@chakra-ui/react'
 import moment from 'moment'
 import React, { useRef, useState } from 'react'
-import { community } from '../../Atoms/communityAtoms'
+import { community, communityState } from '../../Atoms/communityAtoms'
 import { RiCake2Line } from 'react-icons/ri'
 import { GiBalloonDog } from 'react-icons/gi'
 import { SiDogecoin } from 'react-icons/si'
@@ -9,21 +9,56 @@ import { SiDogecoin } from 'react-icons/si'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth } from '../../FireBase/ClientApp'
+import { auth, firestore, storage } from '../../FireBase/ClientApp'
 import useSelectedFile from '../../hooks/useSelectedFile'
+import { getDownloadURL, ref, uploadString } from 'firebase/storage'
+import { doc, updateDoc } from 'firebase/firestore'
+import { useSetRecoilState } from 'recoil'
 
 type aboutProps = {
     communityData: community
 }
 
 const About:React.FC<aboutProps> = ({ communityData }) => {
-    const router = useRouter();
     const [user] = useAuthState(auth)
     const imageFileRef = useRef<HTMLInputElement>(null);
     const { setImageFile, imageFile, onSelectFile } = useSelectedFile();
     const [ uploadImage, setUpLoadImage ] = useState(false);
+    const setCommunityStateValue = useSetRecoilState(communityState)
 
-    const onUpLoad = async () => {}
+    const onUpLoad = async () => {
+        if(!imageFile) return;
+        setUpLoadImage(true)
+        try {
+            // ストレージにアップロード
+            const imageRef = ref(storage, `communities/${communityData.id}/image`);
+
+            // POST メソッドを使用して、指定したリソースに指定した文字列をアップロード。
+            await uploadString(imageRef, imageFile, 'data_url');
+
+            // アップロードした画像のURLを取得
+            const downLoadUrl = await getDownloadURL(imageRef)
+
+            // ドキュメントの(firestore, "communities", communityData.id)を更新する
+            // updateDocは引数二つ
+            await updateDoc(doc(firestore, "communities", communityData.id), {
+                imageURL: downLoadUrl,
+            })
+
+            setCommunityStateValue((prev) => ({
+                // 配列やオブジェクトの要素を文字通り展開する構文。
+                ...prev,
+                currentCommunity: {
+                    ...prev.currentCommunity,
+                    imageURL: downLoadUrl,
+                } as community,
+            }));
+
+        } catch (error:any) {
+            console.log("onUploadError", error)
+        }
+        setUpLoadImage(false)
+    }
 
     return (
         <Box position="sticky" top="14px">
@@ -55,7 +90,7 @@ const About:React.FC<aboutProps> = ({ communityData }) => {
                         {/* yyyy：年を略さずに 4 桁の数値で表します。 MMM：月を表す 3 文字の略語（英語の Jan、Feb、Oct など）。 dd：日を数値で表し、数値が 1 桁の場合は先頭にゼロを付けます*/}
                         {moment(new Date(communityData.createdAt?.seconds * 1000)).format("MMM DD, YYYY")}</Text>)}
                     </Flex>
-                    <Link href={`/1/${router.query.communityId}/submit`}>
+                    <Link href={`/1/${communityData.id}/submit`}>
                         <Button mt={2} >
                             投稿する
                         </Button>
@@ -66,7 +101,7 @@ const About:React.FC<aboutProps> = ({ communityData }) => {
                             <Stack spacing={1} fontSize="10pt">
                                 <Text fontWeight={500}>投稿者</Text>
                                 <Flex justifyContent="space-between" alignItems="center">
-                                    <Text color="orange.500" cursor="pointer" _hover={{ textDecor: "none" }} onClick={() => {}}>イメージの変更</Text>
+                                    <Text color="orange.500" cursor="pointer" _hover={{ textDecor: "none" }} onClick={() => imageFileRef.current?.click()}>イメージの変更</Text>
                                     {communityData.imageURL || imageFile ? (
                                         <Image src={ imageFile || communityData.imageURL} borderRadius="full" boxSize="40px" alt='コミュニティーイメージ'/>
                                     ) : (
