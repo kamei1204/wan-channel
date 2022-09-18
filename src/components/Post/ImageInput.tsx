@@ -18,7 +18,7 @@ const ImageInput:React.FC<ImageInputProps> = ({ imageFile, setImageFile, setSele
         <Flex flexDirection="column" justify="center" align="center" width="100%">
             {imageFile ? (
                 <>
-                <Image src={imageFile} maxWidth="400px" maxHeight="400px"/>
+                <Image src={imageFile} maxWidth="300px" maxHeight="300px"/>
                 <Stack direction="row" mt={4}>
                     <Button height="30px" onClick={() => setSelectedItem("投稿")}>投稿に戻る</Button>
                     <Button 

@@ -15,7 +15,7 @@ type PostItemProps = {
     // 投票した人数
     userVoteValue?: number;
     // 投票した人にアクセスする
-    onVote: () => {};
+    onVote: (post:Post, vote:number, communityId: string ) => void;
     // 投稿削除
     onDeletePost: (post: Post) => Promise<boolean>
     // 投稿選択
@@ -57,15 +57,15 @@ const PostItem:React.FC<PostItemProps> = ({
                         color={ userVoteValue === 1 ? "brand.100" : "gray.400" }
                         fontSize={18}
                         cursor="pointer"
-                        onClick={onVote}
+                        onClick={() => onVote(post, 1, post.communityId)}
                         mt={4}
                 />
                 <Text fontSize={20}>{post.voteStatus}</Text>
-                <Icon as={ userVoteValue === 1 ? BsFillArrowDownCircleFill : CgArrowDownO} 
-                        color={ userVoteValue === 1 ? "blue.200" : "gray.400" }
+                <Icon as={ userVoteValue === -1 ? BsFillArrowDownCircleFill : CgArrowDownO} 
+                        color={ userVoteValue === -1 ? "blue.200" : "gray.400" }
                         fontSize={18}
                         cursor="pointer"
-                        onClick={onVote}
+                        onClick={() => onVote(post, -1, post.communityId)}
                 />
             </Flex>
             <Flex flexDirection="column" width="100%" >
@@ -85,11 +85,11 @@ const PostItem:React.FC<PostItemProps> = ({
                     <Text fontSize="12pt" fontWeight={600} >{post.title}</Text>
                     <Text fontSize="10pt">{post.body}</Text>
                     {post.imageURL && (
-                        <Flex justify="center" align="center" p={2}>
+                        <Flex justify="center" align="center" p={2} >
                             {loadingImage && (
                                 <Skeleton height="200px" width="100%" borderRadius={4}/>
                             )}
-                            <Image src={post.imageURL} maxWidth="460px" alt="post image" display={loadingImage ? "none" : "unset"} onLoad={() => setLoadingImage(false)}/>
+                            <Image src={post.imageURL} maxWidth="300px" alt="post image" display={loadingImage ? "none" : "unset"} onLoad={() => setLoadingImage(false)}/>
                         </Flex>
                     )}
                     <Flex ml={1} mb={0.8} fontWeight={600} color="gray.500">
