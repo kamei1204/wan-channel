@@ -4,7 +4,7 @@ import { firestore } from '../../../FireBase/ClientApp'
 import { doc, getDoc } from 'firebase/firestore'
 import { community, communityState } from '../../../Atoms/communityAtoms'
 // safeJsonStringifyを使用する事で、シリアライザーエラーを防ぐ
-import  safeJsonStringify  from 'json-stringify-safe'
+import safeJsonStringify  from 'json-stringify-safe'
 import NotFound from '../../../components/community/NotFound'
 import Header from '../../../components/community/Header'
 import PageContent from '../../../components/Layout/PageContent'

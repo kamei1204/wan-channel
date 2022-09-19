@@ -6,6 +6,8 @@ import { BsFillArrowUpCircleFill, BsFillArrowDownCircleFill, BsChat } from 'reac
 import { FiBookmark, FiShare } from 'react-icons/fi'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import moment from 'moment';
+import {useRouter} from "next/router"
+import Community from '../Navbar/Directory/Community';
 
 type PostItemProps = {
     // 投稿そのもの
@@ -15,11 +17,11 @@ type PostItemProps = {
     // 投票した人数
     userVoteValue?: number;
     // 投票した人にアクセスする
-    onVote: (post:Post, vote:number, communityId: string ) => void;
+    onVote: ( event: React.MouseEvent<SVGAElement, MouseEvent>, post:Post, vote:number, communityId: string ) => void;
     // 投稿削除
     onDeletePost: (post: Post) => Promise<boolean>
     // 投稿選択
-    onSelectPost: () => void;
+    onSelectPost?: (post:Post) => void;
 
 
 }
@@ -30,6 +32,8 @@ const PostItem:React.FC<PostItemProps> = ({
     const [loadingImage, setLoadingImage] = useState(true);
     const [error, setError] = useState();
     const [loadingDelete, setLoadingDelete] = useState(false);
+    const singlePostPage = !onSelectPost;
+    const router = useRouter()
 
     const handleDelete = async () => {
         setLoadingDelete(true)
@@ -40,6 +44,9 @@ const PostItem:React.FC<PostItemProps> = ({
                 throw new Error("投稿を削除できませんでした")
             }
             console.log("投稿を削除しました")
+            if( singlePostPage) {
+                router.push(`/1/${post.communityId}`);
+            }
         } catch (error: any) {
             setError(error.message)
             
@@ -47,17 +54,18 @@ const PostItem:React.FC<PostItemProps> = ({
         setLoadingDelete(false)
     }
     return (
-        <Flex border="1px solid" bg="white" 
-                borderColor="gray.300" borderRadius={4} 
-                _hover={{ borderColor: "gray.500" }} 
-                cursor="pointer"
-                onClick={onSelectPost}>
-            <Flex flexDirection="column" width="40px" bg="gray.100" borderRadius={4} align="center">
+        <Flex border="1px solid" bg="white"  
+                borderColor={singlePostPage ? "white" : "gray.400"}
+                borderRadius={singlePostPage ? "4px 4px 0 0 " : "4px"} 
+                _hover={{ borderColor: singlePostPage ? "none" : "gray.500"}} 
+                cursor={singlePostPage ? "unset" : "pointer"}
+                onClick={() => onSelectPost && onSelectPost(post)}>
+            <Flex flexDirection="column" width="60px" bg={singlePostPage ? "white" : "gray.200"} borderRadius={4} align="center">
                 <Icon as={ userVoteValue === 1 ? BsFillArrowUpCircleFill : CgArrowUpO} 
                         color={ userVoteValue === 1 ? "brand.100" : "gray.400" }
                         fontSize={18}
                         cursor="pointer"
-                        onClick={() => onVote(post, 1, post.communityId)}
+                        onClick={(event) => onVote(event, post, 1, post.communityId)}
                         mt={4}
                 />
                 <Text fontSize={20}>{post.voteStatus}</Text>
@@ -65,17 +73,17 @@ const PostItem:React.FC<PostItemProps> = ({
                         color={ userVoteValue === -1 ? "blue.200" : "gray.400" }
                         fontSize={18}
                         cursor="pointer"
-                        onClick={() => onVote(post, -1, post.communityId)}
+                        onClick={(event) => onVote(event, post, -1, post.communityId)}
                 />
             </Flex>
             <Flex flexDirection="column" width="100%" >
-            {error && (
+                {error && (
                 <Alert status='error'>
                     <AlertIcon />
                     <Text mr={2}>{error}</Text>
                 </Alert>
-            )}
-                <Stack spacing={1} p='10px'>
+                )}
+                <Stack spacing={1} p='10px '>
                     <Stack direction="row" spacing={0.6} fontSize="8pt" align="center">
                         <Text>
                             {/* 「Moment.js」は、Dateオブジェクトをラップして、日付操作に関する様々な機能を提供します。 */}
@@ -85,11 +93,11 @@ const PostItem:React.FC<PostItemProps> = ({
                     <Text fontSize="12pt" fontWeight={600} >{post.title}</Text>
                     <Text fontSize="10pt">{post.body}</Text>
                     {post.imageURL && (
-                        <Flex justify="center" align="center" p={2} >
+                        <Flex justify="center" align="center" p={2} width="100%">
                             {loadingImage && (
                                 <Skeleton height="200px" width="100%" borderRadius={4}/>
                             )}
-                            <Image src={post.imageURL} maxWidth="300px" alt="post image" display={loadingImage ? "none" : "unset"} onLoad={() => setLoadingImage(false)}/>
+                            <Image src={post.imageURL} maxHeight="460px"alt="post image" display={loadingImage ? "none" : "unset"} onLoad={() => setLoadingImage(false)}/>
                         </Flex>
                     )}
                     <Flex ml={1} mb={0.8} fontWeight={600} color="gray.500">
