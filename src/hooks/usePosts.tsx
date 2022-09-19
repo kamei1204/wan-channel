@@ -7,15 +7,19 @@ import { authModalState } from '../Atoms/authModalAtom'
 import { communityState } from '../Atoms/communityAtoms'
 import { Post, postState, PostVote } from '../Atoms/postsAtoms'
 import { auth, firestore, storage } from '../FireBase/ClientApp'
+import { useRouter } from 'next/router'
 
 const usePosts = () => {
     const [user] = useAuthState(auth)
     const [postStateValue, setPostStateValue ] = useRecoilState(postState);
     const currentCommunity = useRecoilValue(communityState).currentCommunity;
     const setAuthModalState = useSetRecoilState(authModalState)
+    const router = useRouter()
 
     //投票機能
-    const onVote = async ( post:Post, vote:number, communityId: string) => {
+    const onVote = async ( event: React.MouseEvent<SVGAElement, MouseEvent>, post:Post, vote:number, communityId: string) => {
+
+        event.stopPropagation();
 
         if(!user?.uid) {
             setAuthModalState({ open: true , view: "ログイン"})
@@ -102,8 +106,14 @@ const usePosts = () => {
         }
     };
 
-    // 投票ページに移動
-    const onSelectPost = () => {};
+    // 投稿ページに移動
+    const onSelectPost = (post: Post) => {
+        setPostStateValue((prev) => ({
+            ...prev,
+            selectedPost: post,
+        }))
+        router.push(`/1/${post.communityId}/comments/${post.id}`)
+    };
 
     // 投票の削除
     const onDeletePost = async (post:Post): Promise<boolean> => {
