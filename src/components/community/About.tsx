@@ -72,7 +72,7 @@ const About:React.FC<aboutProps> = ({ communityData }) => {
                     <Flex width="100%" fontSize="10pt" p={2}>
                         <Flex flexDirection="column" flexGrow={1} fontWeight={700}>
                             {/* toLocalString === 数字に[,]つける */}
-                            <Text>{communityData.numberOfMembers.toLocaleString()}</Text>
+                            <Text>{communityData.numberOfMembers?.toLocaleString()}</Text>
                             <Text>フォロワー</Text>
                         </Flex>
                         <Flex flexDirection="column" flexGrow={1} fontWeight={700}>
