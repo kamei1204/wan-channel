@@ -1,10 +1,11 @@
-import { collection, doc, getDocs, increment, writeBatch } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, increment, writeBatch } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { authModalState } from '../Atoms/authModalAtom';
 import { community, CommunitySnippet, communityState } from '../Atoms/communityAtoms'
 import { auth, firestore } from '../FireBase/ClientApp';
+import  {useRouter} from "next/router";
 
 const useCommunityData = () => {
     const [user] = useAuthState(auth)
@@ -13,6 +14,9 @@ const useCommunityData = () => {
 
     const [ loading, setLoading ] = useState(false);
     const [ error, setError ] = useState("")
+    const router = useRouter();
+
+
 
     // この関数の内部で最初にサインインしたユーザーを確認して
     // if not() 存在しない場合は、登録Modalを開く
@@ -113,11 +117,28 @@ const useCommunityData = () => {
             setError(error.message)
         }
     };
+
+    const getCommunity = async (communityId: string) => {
+        const getCommunityRef = doc(firestore,"communities",communityId);
+        const getCommunityDoc = await getDoc(getCommunityRef);
+        setCommunityStateValue((prev) => ({
+            ...prev,
+            currentCommunity: { id: getCommunityDoc.id, ...getCommunityDoc.data()} as community,
+        }));
+    };
     
     useEffect(() => {
         if(!user) return;
         getMySnippets()
     },[user])
+
+    useEffect(() => {
+        const { communityId } = router.query;
+
+        if( communityId && !communityStateValue.currentCommunity) {
+            getCommunity(communityId as string);
+        }
+    },[router.query,communityStateValue.currentCommunity]);
 
     return {
         // データの関数

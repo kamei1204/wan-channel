@@ -8,7 +8,7 @@ type PageContentProps = {
 const PageContent:React.FC<PageContentProps> = ({ children }) => {
     console.log("children HERE", children)
     return (
-        <Flex border="1px solid red" justify="center" p={6}>
+        <Flex  justify="center" p={6}>
             <Flex  width="100%" justify="center" maxWidth="1240px">
                 {/* 左側 */}
                 {/* && 両方成立する必要がある */}
