@@ -2,10 +2,10 @@ import { ChevronDownIcon } from '@chakra-ui/icons'
 import { Box, Flex, Icon, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Text } from '@chakra-ui/react'
 import { signOut, User } from 'firebase/auth'
 import React from 'react'
-import { BsMenuDown } from 'react-icons/bs'
+import { GiSittingDog } from 'react-icons/gi'
 import { VscAccount } from 'react-icons/vsc'
 import { CgProfile } from 'react-icons/cg'
-import { MdLogout } from 'react-icons/md'
+import { FiLogOut } from 'react-icons/fi'
 import { SiDatadog } from 'react-icons/si'
 import { auth } from '../../FireBase/ClientApp'
 import { useResetRecoilState, useSetRecoilState } from 'recoil'
@@ -29,60 +29,62 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
 
     return (
         /* chakra-ui menu */
-        <Menu>
-            <MenuButton _hover={{ outline:"1px solid", color:"gray.500" }} borderRadius="10px" p="0px 3px">
-                <Flex align="center">
-                    <Flex align="center">
-                        {user? (
+        <Menu >
+            <MenuButton 
+                ml={2}
+                mr={2}
+                p='0px 6px'
+                borderRadius={4} 
+                _hover={{ outline: "1px solid", outlineColor: "gray.200" }}>
+                <Flex align='center'>
+                    <Flex align='center'>
+                        {user ? (
                             <>
-                            <Icon as={BsMenuDown} mr={2} fontSize={24} color="gray.700" display={{ base: "none", md: "flex" }}/>
-                            <Box flexDirection="column" alignItems="flex-start" fontSize="8pt" display={{ base: "none", lg: "flex" }} mr={2}>
-                                <Text fontWeight={700}>
-                                    {user?.displayName || user?.email?.split("@")[0]}
-                                </Text>
-                                <Flex>
-                                    <Icon as={SiDatadog}  color="orange.400" fontSize={15}/>
-                                    <Text color="gray.400">1 dog</Text>
+                            <Icon as={SiDatadog} fontSize={24} color='gray.400'/>
+                            <Flex flexDirection='column' align='flex-start' ml={2} mr={2} fontSize='8pt' display={{ base: 'none' , md: 'flex' }}>
+                                <Text fontWeight={700} fontSize='10pt'>{ user?.displayName || user.email?.split("@")[0]}</Text>
+                                <Flex align='center'>
+                                    <Icon as={GiSittingDog} color='red.400' mr={1}/>
+                                    <Text color='gray.400' >1 carma</Text>
                                 </Flex>
-                            </Box>
+                            </Flex>
                             </>
-                        ) : (<Icon as={VscAccount} fontSize={2}/>)}
-                        {/* 下矢印ダウンアイコン */}
-                        <ChevronDownIcon />
+                        ) : (
+                            <>
+                            <Icon as={VscAccount} fontSize={24} color='gray.400'/>
+                            </>
+                        )}
                     </Flex>
+                    <ChevronDownIcon />
                 </Flex>
             </MenuButton>
-                
             <MenuList>
-            {user? (
-                <>
-                        <MenuItem fontSize="10pt" fontWeight={700} _hover={{ bg: "orange.300", color:"white" }}>
-                    <Flex align="center" >
-                        <Icon as={CgProfile} fontSize={20} mr={3} />
+                {user ? (
+                    <>
+                    <MenuItem _hover={{ bg: 'orange.400' , color: 'white' }}>
+                    <Flex align='center' fontWeight={700} fontSize='10pt'>
+                        <Icon as={CgProfile} mr={2} fontSize='12pt'/>
                         プロフィール
                     </Flex>
-                </MenuItem>
-
-                {/* 下線 */}
-                <MenuDivider />
-
-                <MenuItem fontSize="10pt" fontWeight={700} _hover={{ bg: "orange.300", color:"white" }} onClick={logout}>
-                    <Flex align="center" >
-                        <Icon as={MdLogout} fontSize={20} mr={3} />
+                    </MenuItem>
+                    <MenuDivider />
+                    <MenuItem _hover={{ bg: 'orange.400' , color: 'white' }} onClick={() => logout()}>
+                    <Flex align='center' fontWeight={700} fontSize='10pt'>
+                        <Icon as={FiLogOut} mr={2} fontSize='12pt'/>
                         ログアウト
                     </Flex>
-                </MenuItem>
-                </> 
+                    </MenuItem>
+                    </>
                 ) : (
-                <>
-                <MenuItem fontSize="10pt" fontWeight={700} _hover={{ bg: "orange.300", color:"white" }} onClick={() => setModalState({ open: true, view: "ログイン"})}>
-                    <Flex align="center" >
-                        <Icon as={MdLogout} fontSize={20} mr={3} />
+                    <>
+                    <MenuItem _hover={{ bg: 'orange.400' , color: 'white' }} onClick={() => setModalState({ open: true, view: "ログイン"})}>
+                    <Flex align='center' fontWeight={700} fontSize='10pt'>
+                        <Icon as={CgProfile} mr={2} fontSize='12pt'/>
                         ログイン / 会員登録
                     </Flex>
-                </MenuItem>
-                </>)}
-                
+                    </MenuItem>
+                    </>
+                )}
             </MenuList>
         </Menu>
     )

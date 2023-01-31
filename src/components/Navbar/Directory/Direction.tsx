@@ -6,8 +6,8 @@ import Community from './Community'
 
 const Direction:React.FC = () => {
     return (
-        <Menu>
-            <MenuButton p="0px 6px" cursor="pointer" _hover={{ outline: "1px solid", color: "gray.500" }} borderRadius="10px" ml={2}>
+        <Menu >
+            <MenuButton p="0px 8px" cursor="pointer" _hover={{ outline: "1px solid", color: "gray.200" }} borderRadius={4} ml={2} height='27px'>
                 <Flex align="center">
                     <Flex align="center">
                         <Icon as={GoHome} fontSize={20}/>

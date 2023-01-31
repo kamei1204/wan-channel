@@ -13,11 +13,11 @@ type RightComponentsProps = {
 const RightComponents:React.FC<RightComponentsProps> = ({ user }) => {
     return (
         <>
-            <Flex justify="center" align="center">
-                <AuthModal />
-                { user ? (<Icons/>) : (<AuthButton />)}
-                <UserMenu user={user}/>
+            <AuthModal />
+            <Flex align="center" justify="center">
+                { user ? <Icons /> : <AuthButton />}
             </Flex>
+            <UserMenu user={user}/>
         </>
     );
 };
