@@ -1,4 +1,4 @@
-import { Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Text } from '@chakra-ui/react'
+import { Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Text } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useRecoilState } from 'recoil'
@@ -29,18 +29,22 @@ const AuthModal:React.FC<AuthModalProps> = () => {
         <>
             <Modal isOpen={modalState.open} onClose={handleClose}>
                 <ModalOverlay />
-                <ModalContent>
+                <ModalContent >
+                    <Image src='/images/sunny.png' height='100px' objectFit='cover'/>
                     <ModalHeader display="flex" flexDirection="column" alignItems="center" justifyContent="center">
                         {modalState.view === "ログイン" && "ログイン"}
                         {modalState.view === "会員登録" && "会員登録"}
                         {modalState.view === "パスワードの再設定" && "パスワードの再設定"}
-                        </ModalHeader>
-                        <ModalCloseButton />
-                        <ModalBody display="flex" flexDirection="column" alignItems="center" justifyContent="center">
-                        <Flex direction="column" align="center" justify="center" width="70%">
+                    </ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+                        <Flex direction="column" align="center" justify="center" width="70%" mb={4}>
                             {modalState.view === "ログイン" || modalState.view === "会員登録" ? (
                             <>
-                                <AuthButtons />
+                            <Flex >
+                                <AuthButtons/>
+
+                            </Flex>
                                 <Text color="gray.500" fontWeight={500}>OR</Text>
                                 <AuthInput /> 
                             </>

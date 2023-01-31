@@ -61,7 +61,7 @@ const About:React.FC<aboutProps> = ({ communityData }) => {
     }
 
     return (
-        <Box position="sticky" top="14px">
+        <Box position="sticky" top="20px">
             <Flex justify="space-between" align="center" bg="orange.400" color="white" p={3} borderRadius="0px 0px 4px 4px">
                 <Text fontSize="10pt">こんな投稿もあります</Text>
                 <Icon as={GiBalloonDog}/>

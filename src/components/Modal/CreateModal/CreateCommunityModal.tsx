@@ -100,7 +100,7 @@ const CreateCommunityModal:React.FC<CreateCommunityModalProps> = ({ open, handle
                     <ModalBody padding="10px 0px" display="flex" flexDirection="column" >
                         <Text>name</Text>
                         <Text fontSize={11} color="gray.500">動物と共に暮らしていく中、楽しい事や困った事はありませんか？</Text>
-                        <Text position="relative" top="27px" left="10px" color="gray.400" width="20%">r/</Text>
+                        <Text position="relative" top="27px" left="10px" color="gray.400" width="20%">1/</Text>
                         <Input  position="relative" pl="30px" size="sm" value={communityName} onChange={handleChange}/>
                         <Text  fontSize="10pt" color={charsRemaining === 0 ? 'red' : 'gray.500'} mt={1} ml={1} >{charsRemaining} 残り文字数</Text>
                         <Box mt={4} mb={4} >

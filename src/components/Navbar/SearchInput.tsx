@@ -8,14 +8,13 @@ import React from 'react'
 
 const SearchInput:React.FC = () => {
     return (
-        <Flex flexGrow={1} mr={2}  ml={2} align="center">
+        <Flex flexGrow={1} align="center" ml={2}>
             <InputGroup>
                 <InputLeftElement
                     pointerEvents='none'
-                    // children={<SearchIcon color='gray.300' mb={1}/>}
                     />
                 <Input 
-                    placeholder='1チャンネル 検索' 
+                    placeholder='いい犬湯 検索' 
                     fontSize="10pt"
                     _placeholder={{ color: "gray.500" }}
                     _hover={{
