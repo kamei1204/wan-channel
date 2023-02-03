@@ -7,7 +7,6 @@ import { FiBookmark, FiShare } from 'react-icons/fi'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import moment from 'moment';
 import {useRouter} from "next/router"
-import Community from '../Navbar/Directory/Community';
 
 type PostItemProps = {
     // 投稿そのもの
@@ -44,7 +43,7 @@ const PostItem:React.FC<PostItemProps> = ({
                 throw new Error("投稿を削除できませんでした")
             }
             console.log("投稿を削除しました")
-            if( singlePostPage) {
+            if( singlePostPage ) {
                 router.push(`/1/${post.communityId}`);
             }
         } catch (error: any) {
@@ -87,7 +86,8 @@ const PostItem:React.FC<PostItemProps> = ({
                     <Stack direction="row" spacing={0.6} fontSize="8pt" align="center">
                         <Text>
                             {/* 「Moment.js」は、Dateオブジェクトをラップして、日付操作に関する様々な機能を提供します。 */}
-                            Post by u/{post.creatorDisplayName} {moment(new Date(post.createdAt.seconds * 1000)).fromNow()}
+                            Post by u/{post.creatorDisplayName} 
+                            {moment(new Date(post.createdAt.seconds * 1000)).fromNow()}
                         </Text>
                     </Stack>
                     <Text fontSize="12pt" fontWeight={600} >{post.title}</Text>

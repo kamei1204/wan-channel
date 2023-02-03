@@ -9,8 +9,8 @@ import { Post } from '../../Atoms/postsAtoms';
 import { firestore, storage } from '../../FireBase/ClientApp';
 import useSelectedFile from '../../hooks/useSelectedFile';
 import ImageInput from './ImageInput';
+import TabItems from './TabItem';
 
-import TabItem from './TabItem';
 import TextInput from './TextInput';
 
 type NewPostLinkProps = {
@@ -69,8 +69,6 @@ const NewPostLink:React.FC<NewPostLinkProps> = ({ user }) => {
             body               : textInputs.body,
             numberOfComments   : 0,
             voteStatus         : 0,
-            // imageURL?          : string
-            // communityImageURL? : string
             createdAt          : serverTimestamp() as Timestamp,
         };
 
@@ -81,12 +79,10 @@ const NewPostLink:React.FC<NewPostLinkProps> = ({ user }) => {
 
             if (imageFile) {
                 const imageRef = ref(storage,`posts/${postDocRef.id}/image`)
-                await uploadString(imageRef, imageFile, 'data_url')
-                const downLoadUrl = await getDownloadURL(imageRef)
+                await uploadString(imageRef, imageFile, 'data_url');
 
-                await updateDoc(postDocRef, {
-                    imageURL: downLoadUrl,
-                });
+                const downLoadUrl = await getDownloadURL(imageRef)
+                await updateDoc(postDocRef, {imageURL: downLoadUrl,});
             }
             
             router.back();
@@ -133,7 +129,7 @@ const NewPostLink:React.FC<NewPostLinkProps> = ({ user }) => {
         <Flex flexDirection="column" mt={2} borderRadius={4} bg="white">
             <Flex width="100%">
                 {formTabs.map((item) => (
-                    <TabItem key={item.title} item={item} selected={item.title === selectedItem} setSelectItem={setSelectedItem}/>
+                    <TabItems key={item.title} item={item} selected={item.title === selectedItem} setSelectItem={setSelectedItem}/>
                 ))}
             </Flex>
             <Flex p={3}>
