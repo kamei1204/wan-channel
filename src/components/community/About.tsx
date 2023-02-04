@@ -7,13 +7,13 @@ import { GiBalloonDog } from 'react-icons/gi'
 import { SiDogecoin } from 'react-icons/si'
 
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth, firestore, storage } from '../../FireBase/ClientApp'
 import useSelectedFile from '../../hooks/useSelectedFile'
 import { getDownloadURL, ref, uploadString } from 'firebase/storage'
 import { doc, updateDoc } from 'firebase/firestore'
 import { useSetRecoilState } from 'recoil'
+import { useRouter } from 'next/router'
 
 type aboutProps = {
     communityData: community
@@ -25,6 +25,7 @@ const About:React.FC<aboutProps> = ({ communityData }) => {
     const { setImageFile, imageFile, onSelectFile } = useSelectedFile();
     const [ uploadImage, setUpLoadImage ] = useState(false);
     const setCommunityStateValue = useSetRecoilState(communityState)
+    const router = useRouter()
 
     const onUpLoad = async () => {
         if(!imageFile) return;
@@ -88,10 +89,10 @@ const About:React.FC<aboutProps> = ({ communityData }) => {
                         <Icon as={RiCake2Line} mr={2}/>
                         {communityData.createdAt && (<Text>Created{" "} 
                         {/* yyyy：年を略さずに 4 桁の数値で表します。 MMM：月を表す 3 文字の略語（英語の Jan、Feb、Oct など）。 dd：日を数値で表し、数値が 1 桁の場合は先頭にゼロを付けます*/}
-                        {moment(new Date(communityData.createdAt?.seconds * 1000)).format("MMM DD, YYYY")}</Text>)}
+                        {moment(new Date(communityData.createdAt.seconds * 1000)).format("MMM DD, YYYY")}</Text>)}
                     </Flex>
-                    <Link href={`/1/${communityData.id}/submit`}>
-                        <Button mt={2} >
+                    <Link href={`/1/${router.query.communityId}/submit`}>
+                        <Button mt={3} height='30px' >
                             投稿する
                         </Button>
                     </Link>

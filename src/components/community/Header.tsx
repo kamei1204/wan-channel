@@ -1,17 +1,17 @@
 import { Box, Button, Flex, Icon, Image, Text } from '@chakra-ui/react'
 import React from 'react'
-import { community } from '../../Atoms/communityAtoms'
+import { Community } from '../../Atoms/communityAtoms'
 import { SiDogecoin } from 'react-icons/si'
 import useCommunityData from '../../hooks/useCommunityData'
 
 
 type HeaderProps = {
-    communityData: community
+    communityData: Community
 }
 
 const Header:React.FC<HeaderProps> = ({ communityData }) => {
 
-    const { communityStateValue, onJoinOrLeaveCommunity, loading } = useCommunityData();
+    const { communityStateValue, onJoinOrLeaveCommunity, loading, error } = useCommunityData();
                     // !!でboolealizeする
     const isJoined = !!communityStateValue.mySnippets.find((item) => item.communityId === communityData.id) 
 
