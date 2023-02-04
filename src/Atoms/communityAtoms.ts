@@ -4,7 +4,7 @@ import { atom } from "recoil";
 // ここにあるインターフェイスにより、コードを強固にしエラーやバグを防ぐ
 
 
-export interface community {
+export interface Community {
     id              : string ;
     creatorId       : string ;
     numberOfMembers : number ;
@@ -22,7 +22,7 @@ export interface CommunitySnippet {
 // 実際にコミュニティーをモデル化し何が入っているのかを正確に知ることができ、コミュニティーの状態をmySnippetsに配列で保存する
 interface CommunityState {
     mySnippets: CommunitySnippet[];
-    currentCommunity?: community
+    currentCommunity?: Community
 }
 
 

@@ -8,7 +8,7 @@ type TabItemProps = {
     setSelectItem: (value: string) => void;
 }
 
-const TabItem:React.FC<TabItemProps> = ({ item, selected, setSelectItem }) => {
+const TabItems:React.FC<TabItemProps> = ({ item, selected, setSelectItem }) => {
     return (
         <Flex justify="center" align="center" flexGrow={1} padding="14px 0"
                 fontWeight={700}
@@ -27,4 +27,4 @@ const TabItem:React.FC<TabItemProps> = ({ item, selected, setSelectItem }) => {
     )
 }
 
-export default TabItem
+export default TabItems

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { authModalState } from '../Atoms/authModalAtom';
-import { community, CommunitySnippet, communityState } from '../Atoms/communityAtoms'
+import { Community, CommunitySnippet, communityState } from '../Atoms/communityAtoms'
 import { auth, firestore } from '../FireBase/ClientApp';
 import  {useRouter} from "next/router";
 
@@ -20,7 +20,7 @@ const useCommunityData = () => {
 
     // この関数の内部で最初にサインインしたユーザーを確認して
     // if not() 存在しない場合は、登録Modalを開く
-    const onJoinOrLeaveCommunity = (communityDate: community, isJoined: boolean) => {
+    const onJoinOrLeaveCommunity = (communityDate: Community, isJoined: boolean) => {
         // ユーザーが存在しない場合ログインModalを開く
         if(!user) {
             setAuthModalState({open: true, view: "ログイン"});
@@ -59,7 +59,7 @@ const useCommunityData = () => {
 
     
     
-    const joinCommunity = async (communityData: community) => {
+    const joinCommunity = async (communityData: Community) => {
         try {
             // writeBatchによってfirestoreに書き込みをする
             const batch = writeBatch(firestore)
@@ -116,6 +116,7 @@ const useCommunityData = () => {
             console.log('退出時のエラー', error)
             setError(error.message)
         }
+        setLoading(false)
     };
 
     const getCommunity = async (communityId: string) => {
@@ -123,7 +124,7 @@ const useCommunityData = () => {
         const getCommunityDoc = await getDoc(getCommunityRef);
         setCommunityStateValue((prev) => ({
             ...prev,
-            currentCommunity: { id: getCommunityDoc.id, ...getCommunityDoc.data()} as community,
+            currentCommunity: { id: getCommunityDoc.id, ...getCommunityDoc.data()} as Community,
         }));
     };
     
@@ -145,6 +146,7 @@ const useCommunityData = () => {
         communityStateValue,
         onJoinOrLeaveCommunity,
         loading,
+        error
     };
 };
 

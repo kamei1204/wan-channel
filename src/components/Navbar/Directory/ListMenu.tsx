@@ -14,9 +14,7 @@ const ListMenu = () => {
             <MenuItem flexDirection="column" fontSize="10pt" width="100%" _hover={{ bg: "gray.100" }} onClick={() =>setOpen(true)} >
             <Flex align="center">
                 <Icon as={GoHome} mr={2} fontSize={20}/>
-                <Link href='/'>
                 <Text fontWeight={600}>ホーム</Text>
-                </Link>
             </Flex>
             </MenuItem>
             <MenuItem flexDirection="column" fontSize="10pt" width="100%" _hover={{ bg: "gray.100" }} onClick={() =>setOpen(true)} >

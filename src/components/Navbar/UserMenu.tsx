@@ -23,7 +23,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
 
     const logout = async () => {
         await signOut(auth);
-        // resetCommunityState();
+        resetCommunityState();
         
     }
 
@@ -68,7 +68,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
                     </Flex>
                     </MenuItem>
                     <MenuDivider />
-                    <MenuItem _hover={{ bg: 'orange.400' , color: 'white' }} onClick={() => logout()}>
+                    <MenuItem _hover={{ bg: 'orange.400' , color: 'white' }} onClick={logout}>
                     <Flex align='center' fontWeight={700} fontSize='10pt'>
                         <Icon as={FiLogOut} mr={2} fontSize='12pt'/>
                         ログアウト

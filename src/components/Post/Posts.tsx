@@ -6,7 +6,7 @@ import { community } from '../../Atoms/communityAtoms'
 import { Post } from '../../Atoms/postsAtoms';
 import { auth, firestore } from '../../FireBase/ClientApp';
 import usePosts from '../../hooks/usePosts';
-import PostItem from './postItem';
+import PostItem from './PostItem';
 import PostLoader from './PostLoader';
 
 type PostsProps = {
@@ -70,7 +70,7 @@ const Posts:React.FC<PostsProps> = ({ communityData }) => {
             <Stack>
             {postStateValue.posts.map((item) => (
                 <PostItem 
-                    key={item.id}   
+                    key={item.communityId}   
                     post={item} 
                     userCreator={user?.uid === item.creatorId}
                     userVoteValue={postStateValue.postVotes.find((vote) => vote.postId === item.id)?.voteValue}
