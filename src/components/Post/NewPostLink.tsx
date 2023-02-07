@@ -31,10 +31,6 @@ const formTabs: TabItem[] = [
         icon : IoLink
     },
     {
-        title: "フォロワー",
-        icon : IoPeopleOutline
-    },
-    {
         title: "音声",
         icon : IoMic
     },
