@@ -2,7 +2,7 @@ import { Stack } from '@chakra-ui/react';
 import { collection, getDoc, getDocs, orderBy, query, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { community } from '../../Atoms/communityAtoms'
+import { Community } from '../../Atoms/communityAtoms'
 import { Post } from '../../Atoms/postsAtoms';
 import { auth, firestore } from '../../FireBase/ClientApp';
 import usePosts from '../../hooks/usePosts';
@@ -10,7 +10,7 @@ import PostItem from './PostItem';
 import PostLoader from './PostLoader';
 
 type PostsProps = {
-    communityData: community;
+    communityData: Community;
     userId?: "string"
 }
 
