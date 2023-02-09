@@ -34,7 +34,10 @@ const PostItem:React.FC<PostItemProps> = ({
     const singlePostPage = !onSelectPost;
     const router = useRouter()
 
-    const handleDelete = async () => {
+    const handleDelete = async (event: React.MouseEvent<SVGAElement, MouseEvent>) => {
+
+        event.stopPropagation();
+
         setLoadingDelete(true)
         try {
             const success = await onDeletePost(post);

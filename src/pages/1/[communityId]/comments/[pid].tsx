@@ -35,6 +35,7 @@ const postPage: React.FC = () => {
     useEffect(() => {
         const {pid} = router.query;
 
+        //pidに選択した投稿がなかった場合//fetchPostでデータを取ってくる
         if( pid && !postStateValue.selectedPost ) {
             fetchPost(pid as string);
         }
