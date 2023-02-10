@@ -4,9 +4,8 @@ import * as admin from "firebase-admin";
 admin.initializeApp();
 const db = admin.firestore();
 
-export const CreateUserDocument = functions.auth
-    .user()
-    .onCreate(async (user) => {
+export const CreateUserDocument = functions.auth.user()
+    .onCreate(async (user:any) => {
         const newUser = {
             uid: user.uid,
             email: user.email,
