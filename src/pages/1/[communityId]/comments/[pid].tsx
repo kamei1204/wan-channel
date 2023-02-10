@@ -10,6 +10,7 @@ import { Post } from '../../../../Atoms/postsAtoms'
 import About from '../../../../components/community/About'
 import useCommunityData from '../../../../hooks/useCommunityData'
 import { communityState } from '../../../../Atoms/communityAtoms'
+import Comments from '../../../../components/Post/comments/comments'
 
 const postPage: React.FC = () => {
 
@@ -53,7 +54,8 @@ const postPage: React.FC = () => {
                     userVoteValue={postStateValue.postVotes.find((item) => item.postId === postStateValue.selectedPost?.id)?.voteValue}
                     userCreator={user?.uid === postStateValue.selectedPost?.creatorId}
                     />
-            }
+                }
+                <Comments />
             </>
             <>
                 {communityStateValue.currentCommunity &&
