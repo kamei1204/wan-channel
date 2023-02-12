@@ -9,8 +9,8 @@ import { doc, getDoc } from 'firebase/firestore'
 import { Post } from '../../../../Atoms/postsAtoms'
 import About from '../../../../components/community/About'
 import useCommunityData from '../../../../hooks/useCommunityData'
-import { communityState } from '../../../../Atoms/communityAtoms'
-import Comments from '../../../../components/Post/comments/comments'
+import { User } from 'firebase/auth'
+import Comments from '../../../../components/Post/commentsArea/Comments'
 
 const postPage: React.FC = () => {
 
@@ -55,7 +55,7 @@ const postPage: React.FC = () => {
                     userCreator={user?.uid === postStateValue.selectedPost?.creatorId}
                     />
                 }
-                <Comments />
+                <Comments user={user as User} selectedPost={postStateValue.selectedPost} communityId={postStateValue.selectedPost?.communityId as string}/>
             </>
             <>
                 {communityStateValue.currentCommunity &&
