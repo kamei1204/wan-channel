@@ -1,7 +1,6 @@
 import { Button, Flex, Text, Textarea } from '@chakra-ui/react';
 import { User } from 'firebase/auth';
 import React from 'react'
-import AuthButtons from '../../Modal/Auth/AuthButtons';
 import AuthButton from '../../Navbar/AuthButton';
 
 type CommentInputProps = {
@@ -24,7 +23,8 @@ const CommentInput:React.FC<CommentInputProps> = (
                         <span>
                             {user?.email?.split("@")[0]}
                         </span>
-                        <Textarea
+                    </Text>
+                    <Textarea
                             value={commentText}
                             onChange={(event) => setCommentText(event.target.value)}
                             placeholder="コメントはこちらから"
@@ -33,26 +33,26 @@ const CommentInput:React.FC<CommentInputProps> = (
                             borderRadius={4}
                             minHeight="160px"
                             _focus={{ bg: "white", border: "1px solid black", outline: "none"}}
-                        >
-                            <Flex
-                                position="absolute"
-                                left="1px"
-                                right={0.2}
-                                bottom="2px"
-                                justify="flex-end"
-                                borderRadius="0px 0px 4px 4px"
-                                p="6px 8px"
-                                bg="gray.200">
-                                <Button
-                                    height="26px"
-                                    disabled={!commentText.length}
-                                    isLoading={createLoading}
-                                    onClick={() => onCreateComment(commentText)}>
-                                    コメントする
-                                </Button>
-                            </Flex>
-                        </Textarea>
-                    </Text>
+                    />
+                    <Flex
+                        position="absolute"
+                        left="1.2px"
+                        right={0.3}
+                        bottom="2px"
+                        justify="flex-end"
+                        borderRadius="0px 0px 4px 4px"
+                        p="6px 8px"
+                        bg="gray.100"
+                    >
+                        <Button
+                            height="26px"
+                            disabled={!commentText.length}
+                            isLoading={createLoading}
+                            onClick={() => onCreateComment(commentText)}>
+                            コメントする
+                        </Button>
+                    </Flex>
+                        
                 </>
             ) : (
                 <>
