@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { GetServerSidePropsContext } from "next"
 import { firestore } from '../../../FireBase/ClientApp'
 import { doc, getDoc } from 'firebase/firestore'
-import { community, communityState } from '../../../Atoms/communityAtoms'
+import { Community, communityState } from '../../../Atoms/communityAtoms'
 // safeJsonStringifyを使用する事で、シリアライザーエラーを防ぐ
 import safeJsonStringify  from 'json-stringify-safe'
 import NotFound from '../../../components/community/NotFound'
@@ -15,7 +15,7 @@ import About from '../../../components/community/About'
 import { Flex } from '@chakra-ui/react'
 
 type communityPageProps = {
-    communityData: community;
+    communityData: Community;
 }
 
 const communityPage:React.FC<communityPageProps> = ({ communityData }) => {
