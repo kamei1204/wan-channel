@@ -57,7 +57,7 @@ const NewPostLink:React.FC<NewPostLinkProps> = ({ user }) => {
     const handleCreatePost = async () => {
         const { communityId } = router.query;
         
-        const newPost: Post = {
+        const newPost = {
             communityId        : communityId as string,
             creatorId          : user?.uid,
             creatorDisplayName : user.email!.split("@")[0],
