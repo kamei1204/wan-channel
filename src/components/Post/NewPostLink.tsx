@@ -58,7 +58,6 @@ const NewPostLink:React.FC<NewPostLinkProps> = ({ user }) => {
         const { communityId } = router.query;
         
         const newPost: Post = {
-            id                 : communityId as string,
             communityId        : communityId as string,
             creatorId          : user?.uid,
             creatorDisplayName : user.email!.split("@")[0],
