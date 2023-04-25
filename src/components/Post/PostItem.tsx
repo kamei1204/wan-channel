@@ -35,7 +35,7 @@ const PostItem:React.FC<PostItemProps> = ({
     const singlePostPage = !onSelectPost;
     const router = useRouter()
 
-    const handleDelete = async (event: React.MouseEvent<SVGElement, MouseEvent>) => {
+    const handleDelete = async (event: any) => {
 
         event.stopPropagation();
 
