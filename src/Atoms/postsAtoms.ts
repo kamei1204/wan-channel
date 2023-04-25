@@ -9,7 +9,10 @@ export type Post = {
     title              : string ; 
     body               : string ;
     numberOfComments   : number ;
-    voteStatus         : number ;
+    voteStatus         : number ;currentUserVoteStatus?: {
+        id: string;
+        voteValue: number;
+    };
     createdAt          : Timestamp ;
     imageURL?          : string ;
 }
