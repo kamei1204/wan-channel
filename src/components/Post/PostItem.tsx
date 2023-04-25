@@ -1,4 +1,4 @@
-import { Alert, AlertIcon, Flex, Icon, Image, Skeleton, Spinner, Stack, Text } from '@chakra-ui/react';
+import { Alert, AlertIcon, Flex, Icon, Image, Link, Skeleton, Spinner, Stack, Text } from '@chakra-ui/react';
 import React, { useState } from 'react'
 import { Post } from '../../Atoms/postsAtoms'
 import { CgArrowUpO, CgArrowDownO } from 'react-icons/cg'
@@ -6,7 +6,7 @@ import { BsFillArrowUpCircleFill, BsFillArrowDownCircleFill, BsChat } from 'reac
 import { FiBookmark, FiShare } from 'react-icons/fi'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import moment from 'moment';
-import {useRouter} from "next/router"
+import { useRouter } from "next/router"
 
 type PostItemProps = {
     // 投稿そのもの
@@ -16,17 +16,18 @@ type PostItemProps = {
     // 投票した人数
     userVoteValue?: number;
     // 投票した人にアクセスする
-    onVote: ( event: React.MouseEvent<SVGAElement, MouseEvent>, post:Post, vote:number, communityId: string ) => void;
+    onVote: ( event: React.MouseEvent<SVGElement, MouseEvent>, post:Post, vote:number, communityId: string ) => void;
     // 投稿削除
     onDeletePost: (post: Post) => Promise<boolean>
     // 投稿選択
-    onSelectPost?: (post:Post) => void;
+    onSelectPost?: (post: Post) => void;
+    homePage?: boolean,
 
 
 }
 
 const PostItem:React.FC<PostItemProps> = ({
-    post, userCreator, userVoteValue, onVote, onDeletePost, onSelectPost
+    post, userCreator, userVoteValue, onVote, onDeletePost, onSelectPost, homePage,
 }) => {
     const [loadingImage, setLoadingImage] = useState(true);
     const [error, setError] = useState();
@@ -34,7 +35,7 @@ const PostItem:React.FC<PostItemProps> = ({
     const singlePostPage = !onSelectPost;
     const router = useRouter()
 
-    const handleDelete = async (event: React.MouseEvent<SVGAElement, MouseEvent>) => {
+    const handleDelete = async (event: React.MouseEvent<SVGElement, MouseEvent>) => {
 
         event.stopPropagation();
 
@@ -87,6 +88,18 @@ const PostItem:React.FC<PostItemProps> = ({
                 )}
                 <Stack spacing={1} p='10px '>
                     <Stack direction="row" spacing={0.6} fontSize="8pt" align="center">
+                        {homePage && (
+                            <>
+                                {post.imageURL ? (
+                                    <Image src={post.imageURL} borderRadius='full' boxSize='18px' mr={2}/>
+                                ) : (
+                                        <Icon as={BsFillArrowDownCircleFill} fontSize='18pt' mr={1} color='orange.400'/>
+                                )}
+                                <Link href={`1/${post.communityId}`}>
+                                    <Text fontWeight={700} _hover={{textDecoration: "underline"}}>{`1/${post.communityId}`}</Text>
+                                </Link>
+                            </>
+                        )}
                         <Text>
                             {/* 「Moment.js」は、Dateオブジェクトをラップして、日付操作に関する様々な機能を提供します。 */}
                             Post by u/{post.creatorDisplayName} 
