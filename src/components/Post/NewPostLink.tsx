@@ -52,7 +52,7 @@ const NewPostLink:React.FC<NewPostLinkProps> = ({ user }) => {
     // const [ imageFile, setImageFile ] = useState<string>();
     const { imageFile, setImageFile, onSelectFile } = useSelectedFile();
     const [ loading, setLoading ] = useState(false)
-    const [ error, setError ] = useState(false)
+    const [ error, setError ] = useState(false)  
 
     const handleCreatePost = async () => {
         const { communityId } = router.query;
