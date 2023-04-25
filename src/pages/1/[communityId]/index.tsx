@@ -12,15 +12,14 @@ import CreatePostLink from '../../../components/Post/CreatePostLink'
 import Posts from '../../../components/Post/Posts'
 import { useSetRecoilState } from 'recoil'
 import About from '../../../components/community/About'
-import { Flex } from '@chakra-ui/react'
 
 type communityPageProps = {
     communityData: Community;
 }
 
 const communityPage:React.FC<communityPageProps> = ({ communityData }) => {
-    const setCommunityStateValue = useSetRecoilState(communityState)
     console.log('コミュニティーのデータ', communityData);
+    const setCommunityStateValue = useSetRecoilState(communityState);
 
     if(!communityData) {
         return  <NotFound />
@@ -29,9 +28,9 @@ const communityPage:React.FC<communityPageProps> = ({ communityData }) => {
     useEffect(() => {
         setCommunityStateValue((prev) => ({
             ...prev,
-            currentCommunity: communityData
+            currentCommunity: communityData,
         }))
-    }, [])
+    }, [communityData])
     
 
     return (
