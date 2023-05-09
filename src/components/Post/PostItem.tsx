@@ -16,7 +16,7 @@ type PostItemProps = {
     // 投票した人数
     userVoteValue?: number;
     // 投票した人にアクセスする
-    onVote: ( event: React.MouseEvent<SVGElement, MouseEvent>, post:Post, vote:number, communityId: string ) => void;
+    onVote: ( event: any, post:Post, vote:number, communityId: string ) => void;
     // 投稿削除
     onDeletePost: (post: Post) => Promise<boolean>
     // 投稿選択

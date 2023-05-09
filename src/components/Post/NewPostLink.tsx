@@ -15,6 +15,7 @@ import TextInput from './TextInput';
 
 type NewPostLinkProps = {
     user: User;
+    communityImageUrl?: string;
 }
 
 const formTabs: TabItem[] = [
@@ -41,7 +42,7 @@ export type  TabItem = {
     icon : typeof Icon.arguments;
 };
 
-const NewPostLink:React.FC<NewPostLinkProps> = ({ user }) => {
+const NewPostLink:React.FC<NewPostLinkProps> = ({ user, communityImageUrl }) => {
 
     const router = useRouter();
     const [ selectedItem, setSelectedItem ] = useState(formTabs[0].title)
@@ -59,6 +60,7 @@ const NewPostLink:React.FC<NewPostLinkProps> = ({ user }) => {
         
         const newPost = {
             communityId        : communityId as string,
+            communityImageUrl  : communityImageUrl || "",
             creatorId          : user?.uid,
             creatorDisplayName : user.email!.split("@")[0],
             title              : textInputs.title,

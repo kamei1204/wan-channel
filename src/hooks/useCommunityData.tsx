@@ -47,7 +47,8 @@ const useCommunityData = () => {
                 setCommunityStateValue(prev => ({
                     ...prev,
                     mySnippets: snippets as CommunitySnippet[],
-                }))
+                    snippetsFetched: true
+                }));
             // データを文書化する
             console.log('here snippet' , snippets)
         } catch (error:any) {
@@ -132,6 +133,7 @@ const useCommunityData = () => {
     useEffect(() => {
         if(!user) return;
         getMySnippets()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[user])
 
     useEffect(() => {
@@ -140,6 +142,7 @@ const useCommunityData = () => {
         if( communityId && !communityStateValue.currentCommunity) {
             getCommunity(communityId as string);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[router.query,communityStateValue.currentCommunity]);
 
     return {

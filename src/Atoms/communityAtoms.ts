@@ -22,12 +22,14 @@ export interface CommunitySnippet {
 // 実際にコミュニティーをモデル化し何が入っているのかを正確に知ることができ、コミュニティーの状態をmySnippetsに配列で保存する
 interface CommunityState {
     mySnippets: CommunitySnippet[];
-    currentCommunity?: Community
+    currentCommunity?: Community;
+    snippetsFetched: boolean;
 }
 
 
 const defaultCommunityState: CommunityState = {
     mySnippets: [],
+    snippetsFetched: false
 }
 
 export const communityState = atom<CommunityState>({

@@ -2,9 +2,12 @@ import { Box, Button, Checkbox, Divider, Flex, Icon, Input, Modal, ModalBody, Mo
 import React, { useState } from 'react'
 import { HiUser, HiEye } from "react-icons/hi"
 import { BsFillLockFill } from "react-icons/bs"
-import { doc, runTransaction, serverTimestamp, setDoc, Transaction } from 'firebase/firestore';
+import { doc, runTransaction, serverTimestamp } from 'firebase/firestore';
 import { auth, firestore } from '../../../FireBase/ClientApp';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useRouter } from "next/router";
+import useDirectory from '../../../hooks/useDirectory';
+
 
 type CreateCommunityModalProps = {
     open: boolean;
@@ -18,8 +21,9 @@ const CreateCommunityModal:React.FC<CreateCommunityModalProps> = ({ open, handle
     const [ charsRemaining, setCharsRemaining ] = useState(21);
     const [ communityType, setCommunityType ] = useState('public');
     const [ error, setError ] = useState("");
-    const [ loading, setLoading ] = useState(false)
-
+    const [ loading, setLoading ] = useState(false);
+    const router = useRouter();
+    const { toggleMenuOpen } = useDirectory();
 
     const handleChange = (event:React.ChangeEvent<HTMLInputElement>) => {
         if(event.target.value.length > 21) return;
@@ -70,7 +74,7 @@ const CreateCommunityModal:React.FC<CreateCommunityModalProps> = ({ open, handle
                             privacyType: communityType,
                         });
 
-                        // 作成したコミュニティーをfirebaseのユーザーコミュニティースニペットの保存する === communityAtom.tsのmy Snipetts
+                        // 作成したコミュニティーをfirebaseのユーザーコミュニティースニペットに保存する === communityAtom.tsのmy Snipetts
                         transaction.set(
                             doc(firestore, `users/${user?.uid}/communitySnippets`, communityName), 
                         {
@@ -80,6 +84,9 @@ const CreateCommunityModal:React.FC<CreateCommunityModalProps> = ({ open, handle
                         );
                     });
 
+                    handleClose();
+                    toggleMenuOpen();
+                    router.push(`1/${communityName}`);
                 } catch (error: any) {
                     console.log("handleCreateCommunity error", error)
                     setError(error.message);

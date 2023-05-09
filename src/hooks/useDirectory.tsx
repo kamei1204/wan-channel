@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useRouter} from 'next/router'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { directionItemMenu, directoryMenuState } from '../Atoms/directoryMenuItem'
 import { communityState } from '../Atoms/communityAtoms'
 import { TiHome } from 'react-icons/ti'
-
-type Props = {}
 
 const useDirectory = () => {
 
@@ -49,6 +47,7 @@ const useDirectory = () => {
                 },
             }));
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[communityStateValue.currentCommunity])
     
 
