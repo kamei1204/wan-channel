@@ -19,14 +19,15 @@ type communityPageProps = {
 
 const CommunityPage:React.FC<communityPageProps> = ({ communityData }) => {
     console.log('コミュニティーのデータ', communityData);
-    const setCommunityStateValue = useSetRecoilState(communityState);
+    const SetCommunityStateValue = useSetRecoilState(communityState);
 
     
     useEffect(() => {
-        setCommunityStateValue((prev:any) => ({
+        SetCommunityStateValue((prev:any) => ({
             ...prev,
             currentCommunity: communityData
         }));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [communityData])
     
     if(!communityData) {

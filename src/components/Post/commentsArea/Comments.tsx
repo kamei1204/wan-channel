@@ -1,6 +1,6 @@
 import { Box, Flex, SkeletonCircle, SkeletonText, Stack, Text } from '@chakra-ui/react';
 import { User } from 'firebase/auth'
-import { collection, doc, getDoc, getDocs, increment, orderBy, query, serverTimestamp, Timestamp, where, writeBatch } from 'firebase/firestore';
+import { collection, doc, getDocs, increment, orderBy, query, serverTimestamp, Timestamp, where, writeBatch } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import { useSetRecoilState } from 'recoil';
 import { Post, postState } from '../../../Atoms/postsAtoms'
@@ -137,6 +137,7 @@ const Comments:React.FC<CommentsProps> = ({ user, selectedPost, communityId }) =
     useEffect(() => {
         if (!selectedPost) return
         getComments()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[selectedPost])
 
     return (
@@ -183,7 +184,8 @@ const Comments:React.FC<CommentsProps> = ({ user, selectedPost, communityId }) =
                             ) : (
                             <>
                                 {comments.map((comment)=> (
-                                <CommentItem 
+                                <CommentItem
+                                    key={comment.id} 
                                     comment={comment} 
                                     onDeleteComment={onDeleteComment} 
                                     loadingDelete={loadingDeleteId === comment.id} 

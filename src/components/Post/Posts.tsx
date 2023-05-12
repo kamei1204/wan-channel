@@ -1,5 +1,5 @@
 import { Stack } from '@chakra-ui/react';
-import { collection, getDoc, getDocs, orderBy, query, where } from 'firebase/firestore';
+import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Community } from '../../Atoms/communityAtoms'
@@ -59,6 +59,7 @@ const Posts:React.FC<PostsProps> = ({ communityData }) => {
 
     useEffect(() => {
         getPosts();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [communityData])
     
 

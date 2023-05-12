@@ -1,4 +1,4 @@
-import { Button, Flex, Icon, Image, Input, Text } from '@chakra-ui/react';
+import { Button, Flex, Image, Input, Text } from '@chakra-ui/react';
 import React, { useState } from 'react'
 import { useSendPasswordResetEmail } from 'react-firebase-hooks/auth';
 import { useSetRecoilState } from 'recoil'

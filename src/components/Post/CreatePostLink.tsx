@@ -1,4 +1,4 @@
-import { Button, Flex, Icon, Input, Text } from '@chakra-ui/react'
+import { Flex, Icon, Input } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'

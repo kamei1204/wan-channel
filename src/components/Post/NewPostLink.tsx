@@ -5,7 +5,6 @@ import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react'
 import { IoDocumentText, IoImageOutline, IoLink, IoMic, IoPeopleOutline } from 'react-icons/io5'
-import { Post } from '../../Atoms/postsAtoms';
 import { firestore, storage } from '../../FireBase/ClientApp';
 import useSelectedFile from '../../hooks/useSelectedFile';
 import ImageInput from './ImageInput';

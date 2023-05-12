@@ -4,8 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { Community } from '../../Atoms/communityAtoms'
 import { firestore } from '../../FireBase/ClientApp';
 import useCommunityData from '../../hooks/useCommunityData';
-import { CgArrowUpO, CgArrowDownO } from 'react-icons/cg'
-import { event } from 'firebase-functions/v1/analytics';
+import { CgArrowUpO } from 'react-icons/cg'
 
 type Props = {}
 

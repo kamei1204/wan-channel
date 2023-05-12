@@ -12,8 +12,8 @@ import useCommunityData from '../../../../hooks/useCommunityData'
 import { User } from 'firebase/auth'
 import Comments from '../../../../components/Post/commentsArea/Comments'
 
-const postPage: React.FC = () => {
-
+const PostPage: React.FC = () => {
+    
     const [user] = useAuthState(auth)
     const { postStateValue, setPostStateValue, onVote, onDeletePost, onSelectPost, } = usePosts();
     const router = useRouter();
@@ -40,6 +40,7 @@ const postPage: React.FC = () => {
         if( pid && !postStateValue.selectedPost ) {
             fetchPost(pid as string);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [router.query,postStateValue.selectedPost]);
     
 
@@ -66,4 +67,4 @@ const postPage: React.FC = () => {
     )
 }
 
-export default postPage
+export default PostPage
