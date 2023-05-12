@@ -1,7 +1,7 @@
 import { Box, Divider, Flex, Icon, Stack, Text, Button, Image, Spinner } from '@chakra-ui/react'
 import moment from 'moment'
 import React, { useRef, useState } from 'react'
-import { community, communityState } from '../../Atoms/communityAtoms'
+import { Community, communityState } from '../../Atoms/communityAtoms'
 import { RiCake2Line } from 'react-icons/ri'
 import { GiBalloonDog } from 'react-icons/gi'
 import { SiDogecoin } from 'react-icons/si'
@@ -16,7 +16,7 @@ import { useSetRecoilState } from 'recoil'
 import { useRouter } from 'next/router'
 
 type aboutProps = {
-    communityData: community
+    communityData: Community
 }
 
 const About:React.FC<aboutProps> = ({ communityData }) => {
@@ -52,7 +52,7 @@ const About:React.FC<aboutProps> = ({ communityData }) => {
                 currentCommunity: {
                     ...prev.currentCommunity,
                     imageURL: downLoadUrl,
-                } as community,
+                } as Community,
             }));
 
         } catch (error:any) {

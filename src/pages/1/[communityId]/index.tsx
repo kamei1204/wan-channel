@@ -17,21 +17,21 @@ type communityPageProps = {
     communityData: Community;
 }
 
-const communityPage:React.FC<communityPageProps> = ({ communityData }) => {
+const CommunityPage:React.FC<communityPageProps> = ({ communityData }) => {
     console.log('コミュニティーのデータ', communityData);
     const setCommunityStateValue = useSetRecoilState(communityState);
 
+    
+    useEffect(() => {
+        setCommunityStateValue((prev:any) => ({
+            ...prev,
+            currentCommunity: communityData
+        }));
+    }, [communityData])
+    
     if(!communityData) {
         return  <NotFound />
     }
-
-    useEffect(() => {
-        setCommunityStateValue((prev) => ({
-            ...prev,
-            currentCommunity: communityData,
-        }))
-    }, [communityData])
-    
 
     return (
         <>
@@ -75,4 +75,4 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         console.log("getServerSidePropsError", error)
     }
 }
-export default communityPage;
+export default CommunityPage;
