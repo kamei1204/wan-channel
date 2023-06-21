@@ -3,8 +3,6 @@ import { collection, getDocs, limit, orderBy, query, where } from 'firebase/fire
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useRecoilValue } from 'recoil';
-import { communityState } from '../Atoms/communityAtoms';
 import { Post, PostVote } from '../Atoms/postsAtoms';
 import PersonalHome from '../components/community/PersonalHome';
 import Premium from '../components/community/Premium';
@@ -110,24 +108,27 @@ const Home: NextPage = () => {
     <PageContent>
       <>
         <CreatePostLink />
-        {loading ? (
+        {loading ? 
+        (
           <PostLoader />
         ) : (
             <Stack>
               {postStateValue.posts.map((post) => (
-            <PostItem
-              key={post.id}
-              post={post}
-              onDeletePost={onDeletePost}
-              onSelectPost={onSelectPost}
-              onVote={onVote}
-              userVoteValue={
-                postStateValue.postVotes.find((item) => item.postId === post.id)?.voteValue
-              }
-              userCreator={user?.uid === post.creatorId}
-              homePage
-            />
-        ))}</Stack>)}
+              <PostItem
+                key={post.id}
+                post={post}
+                onDeletePost={onDeletePost}
+                onSelectPost={onSelectPost}
+                onVote={onVote}
+                userVoteValue={
+                  postStateValue.postVotes.find((item) => item.postId === post.id)?.voteValue
+                }
+                userCreator={user?.uid === post.creatorId}
+                homePage
+              />
+        ))}
+        </Stack>)
+        }
       </>
       <>
       <Stack spacing={5}>
